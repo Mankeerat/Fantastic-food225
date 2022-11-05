@@ -13,7 +13,8 @@
     that we will be using by the end of November 2nd. 
     - We will meet to review our changes on November 3rd before submitting our project proposal. 
 ## Problems Encountered 
-    - 
+    - Had to come up with a new plan for how we were going to store the reviews in our BTree, as well as restructure 
+    what algorithms we were going to use on our tree. 
 ## Plans for next week
     - Finish the core data structure implementation for our code, as well as the first algorithm of choice that we learned 
     in class (we are thinking BFS at this point in time, but this is subject to change)
