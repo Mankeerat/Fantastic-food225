@@ -1,13 +1,92 @@
-## Leading Question 
 
-## Dataset Acquisition
+Leading Question:
+    How can we give people accurate recommendations based on their reviews that they have written on Amazon fine food reviews?
+    Given the Amazon Food Reviews dataset(http://snap.stanford.edu/data/web-FineFoods.html), we are going to take the individual 
+    reviews for each food, and use them to give a recommendation of what the reviewer would like based on their preferences. 
+    As college students, we don’t have time to go looking around for recipes and foods that we might enjoy. We want our computer program 
+    to do that for us. Our goal is to create a program that allows us to cater our preferences based on ratings that we give recipes or food 
+    that we have already tried. This will allow us to get recommendations that we will actually use and cook/eat in the future, and not have 
+    to spend time looking for food that we may or may not enjoy. We are going to  do this by grouping all 1-5 star ratings per food group into 
+    individual subtrees (based on the root being the food reviewed), and using those neighboring branches to find and match food tastes. 
 
-## Data Format
+Dataset Acquisition and Processing:
+Data Format:
+    We would be using the Amazon Fine Foods Review dataset from the Stanford Large Network dataset. The dataset consists of reviews of fine foods 
+    from amazon spanning a period of more than 10 years including around all 500,000 reviews up to october 2012. The dataset includes product and 
+    user information, ratings and a review. The dataset has around 568,454 reviews from around 256,059 users. The initial dataset is in a text file 
+    format with just simple spaces between each review. Each review looks as follows - 
 
-## Data Correction
+    product/productId: B001E4KFG0
+    review/userId: A3SGXH7AUHU8GW
+    review/profileName: delmartian
+    review/helpfulness: 1/1
+    review/score: 5.0
+    review/time: 1303862400
+    review/summary: Good Quality Dog Food
+    review/text: I have bought several of the Vitality canned dog food products and have
+    found them all to be of good quality. The product looks more like a stew than a
+    processed meat and it smells better. My Labrador is finicky and she appreciates this
+    product better than most.
 
-## Data Storage
+    We do plan to use the whole dataset but not all the components in each datapoint. We would only be using (productId/, review/userId, review/helpfulness, review/score and review/summary) 
 
-## Algorithm 
+Data Correction: (needs help)
+    Since our data is initially in a text file format and not in a graph/tree form, we will first put the data and form a dataframe with the given 5 components/columns mentioned above. 
+    We can take both c++/python library approaches for cleaning our data and getting rid of anything that has a missing value. After we have done data cleaning and put everything 
+    into a dataframe, we would be confident that our data does not have any missing values. From thereon forward, we would start putting our data into a 
+    tree structure that we can traverse through. 
 
-## Timeline
+
+Data Storage:
+    We plan to store the data as a Btree. B-trees are self-balancing tree data structures that would be perfect for this project as we can do searches, insertions and deletions in 
+    logarithmic O(logN) time and it allows us to have nodes with more than one child which is needed for making a recommendation list. We would already have a preprocessed data 
+    table with the desired data which we would then transfer into a b-tree, ranking everything by review and then types of food as we go down the tree. Everything in the 
+    b-tree data structure would be done in logarithmic time making our code searches and new tree generations very fast. 
+
+
+Graph Algorithms:
+Function Inputs:
+    Since our goal is to determine a good recommendation/list of recommendations based on current food reviews, our project will utilize the PageRank algorithm to find how 
+    high a food or product should be ranked on our recommendation list based on the number of reviews, its review scores, and the credibility of the reviewer. We also 
+    want to search for a recommendation in our btree given a review. Due to the large size of our dataset, we can efficiently traverse the tree using Iterative Deepening 
+    Depth-First Search and minimize both the time and space complexities required. Finally, we can use Breadth-First Search to traverse the tree of our reviews and graphically 
+    print out the graph for testing purposes. Breadth-First Search can also be used to determine if there exists a path between any two given recommendations.
+
+Function Outputs:
+    The expected output for our PageRank algorithm is the most recommended/list of recommended foods and products based on the number of reviews,its review scores, and the credibility of the reviewer. 
+    Given a food review, the expected output of Iterative Deepening Depth-First Search is a recommendation based on our criteria for what makes a food highly recommended in our btree. Finally, 
+    our Breadth-First Search traversal algorithm should find and output all possible recommendations that can be accessed from a given food/product.
+
+Function Efficiency:
+    The target time complexity for PageRank is O(Enlog(V)), where V is the number of nodes, E is the number of edges, and n is the number of iterations required by the algorithm.
+
+    The target time complexity for Iterative Deepening Depth-First Search is O(bd), where b is the branching factor and d is the depth of the shallowest solution.
+
+    The target time complexity for Breadth-First Search is O(V + E), where V is the number of nodes and E is the number of edges.
+
+Timeline:
+    Tasks: Implement Data Structure, Data acquisition in that data structure, first algorithm, second algorithm, third algorithm, documentation, results 
+    
+    Week of October 31st: 
+        - Complete Project proposal
+        - Clean data/get rid of missing values. Implement data structure chosen for the project. Must be able to build data structure, traverse it, and do simple changes on it with standard data (not with dataset yet).  
+        - Implement the first algorithm on the simple data and test if it works before we start transferring the actual dataset into our application 
+        - Start data acquisition, little by little figuring out and implementing how we will put our data into our first algorithm 
+
+    Week of November 7th: 
+        - Complete data acquisition, allowing us to do all of the simple algorithms and manipulations that are expected with our data structure, except on a larger dataset. 
+        - Compare efficiency to what we expect, and make changes based on inefficiencies that we find 
+        - Complete the first algorithm on our data structure with our dataset, and implement tests that clearly show how our program runs that algorithm with flying colors 
+
+    Week of November 14th:
+    Test for inefficiencies, and if we are going to make any last changes to data structure and organization of datasheet, do it by the end of this week
+        - Start implementing remaining 2 algorithms, starting off with basic data, and moving to our full size datasheet 
+        - Start documentation on both running the program, and detailed description of how we implemented the first algorithm 
+
+    Thanksgiving break: 
+        - Complete remaining 2 algorithms, and have almost all documentation done for those 2 algorithms 
+
+    Final Week: 
+        - Write out final report with results 
+        - Final tests, and make sure that our program has minimum inefficiencies 
+        - Complete documentation, and make sure our Github Repository is organized and professional 
