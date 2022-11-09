@@ -18,6 +18,7 @@ class BTreeNode {
         BTreeNode(bool is_leaff, unsigned int order);
         BTreeNode(vector<int> v);
         ~BTreeNode();
+        BTreeNode & operator=(const BTreeNode & other);
         void clear(BTreeNode* subroot);
         BTreeNode* copy(const BTreeNode* subroot);
         BTreeNode* find(BTreeNode* subroot, int key);
