@@ -16,10 +16,11 @@ BTreeNode::BTreeNode(bool is_leaff, unsigned int order) {
     order_ = order;
 }
 
-BTreeNode::BTreeNode(vector<int> v) { 
+BTreeNode::BTreeNode(vector<int> v, bool is_leaff) { 
     root_ = nullptr;
+    is_leaf = is_leaff;
     order_ = 3;
-    for(int i = 0; i < v.size(); i++) {
+    for(size_t i = 0; i < v.size(); i++) {
         elements_.push_back(v[i]);
     }
 }
@@ -28,31 +29,45 @@ BTreeNode::~BTreeNode() {
     clear(this->root_);
 }
 
-void BTreeNode::clear(BTreeNode* subroot) { //need to finish this implementation--handle children
-    root_ = nullptr;
-    is_leaf = false;
-    order_ = 3;
-    for(int i = 0; i < elements_.size(); i++) {
-        elements_.erase(elements_.begin() + i);
+BTreeNode & BTreeNode::operator=(const BTreeNode & other) {
+    clear(this->root_);
+    copy(other.root_);
+    return (*this);
+}
+
+void BTreeNode::clear(BTreeNode* subroot) { 
+    for(size_t i= 0; i < subroot->children_.size(); i++) {
+        subroot->children_[i]->elements_.erase(elements_.begin(), elements_.end());
     }
+    subroot->root_ = nullptr;
+    subroot->is_leaf = false;
+    subroot->order_ = 3;
 }
 
 BTreeNode* BTreeNode::copy(const BTreeNode* subroot) {  //work on this too-- will change with our implementation
-    clear(this->root_);
-
+    for(size_t i= 0; i < subroot->children_.size(); i++) {
+        for(size_t j = 0; j < subroot->children_[i]->elements_.size(); j++) {
+            this->children_[i]->elements_[j] = subroot->children_[i]->elements_[j];
+        }
+    }
+    this->order_ = subroot->order_;
+    this->is_leaf = subroot->is_leaf;
+    this->root_ = subroot->root_;
+    return (this);
 }
 
 BTreeNode* BTreeNode::find(BTreeNode* subroot, int key) {
     auto list = subroot->elements_;
-    for(unsigned index = 0; index < list.size() && key > list[index]; index++);
-    if(index < list.size() && list[index] == key) {return subroot;} //error here with [] operator
+    size_t i;
+    for(i = 0; i < list.size() && key > list[i]; i++);
+    if(i < list.size() && list[i] == key) {return subroot;}
 
     if(subroot->is_leaf) {return nullptr;}
-    return find(subroot->children_[index], key);    //error here again with []
+    return find(subroot->children_[i], key);    
 }
 
-void BTreeNode::insert(BTreeNode* subroot, int key) {   //this function needs some work too
-    if(subroot = nullptr) {subroot = new BTreeNode(true, order_);}
+void BTreeNode::insert(BTreeNode* subroot, int key) {   //last function to finish-- must be able to insert a child or element
+    if(subroot == nullptr) {subroot = new BTreeNode(true, order_);}
     //insert(subroot, DataPair(key, value))
 
     if(subroot->elements_.size() >= order_) {
@@ -64,14 +79,20 @@ void BTreeNode::insert(BTreeNode* subroot, int key) {   //this function needs so
 
 }
 
-void BTreeNode::traverse(BTreeNode* root, vector<int> & v) {
-    if(root_ = nullptr) {return;}
+vector<int> BTreeNode::traverse(BTreeNode* root) {
+    vector<int> v;
+    traverse_(root, v);
+    return v;
+}
 
-    for(unsigned index = 0; index < root_->elements_.size(); index++) {
+void BTreeNode::traverse_(BTreeNode* root, vector<int> & vector) {
+    if(root == nullptr) {return;}
+
+    for(size_t index = 0; index < root->elements_.size(); index++) {
         if(!root->is_leaf) {
-            traverse(root->children_[index], v);
+            traverse_(root->children_[index], vector);
         }
-        v.push_back(root->elements_[index]);
+        vector.push_back(root->elements_[index]);
     }
 }
 
