@@ -6,7 +6,7 @@ BTreeNode::BTreeNode() {
     itemName_ = "";
     itemRating_ = -1.0;
     parent_ = nullptr;
-    order_ = 3;
+    order_ = 2;
 }
 
 BTreeNode::BTreeNode(string itemName, float itemRating, bool is_leaff, BTreeNode & parent) {
@@ -14,6 +14,7 @@ BTreeNode::BTreeNode(string itemName, float itemRating, bool is_leaff, BTreeNode
     itemName_ = itemName;
     itemRating_ = itemRating;
     *parent_ = parent;
+    order_ = 2;
 }
 
 BTreeNode::~BTreeNode() {
@@ -27,38 +28,29 @@ BTreeNode & BTreeNode::operator=(const BTreeNode & other) {
 }
 
 void BTreeNode::clear(BTreeNode* subroot) { 
-    // for(size_t i= 0; i < subroot->children_.size(); i++) {
-    //     subroot->children_[i]->elements_.erase(elements_.begin(), elements_.end());
-    // }
-    // subroot->parent_ = nullptr;
-    // subroot->is_leaf = false;
-    // subroot->order_ = 3;
+    subroot->children_.erase(subroot->children_.begin(), subroot->children_.end());
+    subroot->parent_ = nullptr;
+    subroot->is_leaf = false;
+    subroot->order_ = 3;
 }
 
-BTreeNode* BTreeNode::copy(const BTreeNode & subroot) {  //work on this too-- will change with our implementation
-    // for(size_t i= 0; i < subroot.children_.size(); i++) {
-    //     for(size_t j = 0; j < subroot.children_[i]->elements_.size(); j++) {
-    //         this->children_[i]->elements_[j] = subroot.children_[i]->elements_[j];
-    //     }
-    // }
-    // this->order_ = subroot.order_;
-    // this->is_leaf = subroot.is_leaf;
-    // this->parent_ = subroot.parent_;
-    // return (this);
+BTreeNode* BTreeNode::copy(const BTreeNode & subroot) {  
+    for(size_t i = 0; i < subroot.children_.size(); i++) {
+        this->children_.at(i) = subroot.children_.at(i);
+    }
+    this->order_ = subroot.order_;
+    this->is_leaf = subroot.is_leaf;
+    this->parent_ = subroot.parent_;
+    return (this);
 }
 
-BTreeNode* BTreeNode::find(BTreeNode* subroot, int key) {
-    // auto list = subroot->elements_;
-    // size_t i;
-    // for(i = 0; i < list.size() && key > list[i]; i++);
-    // if(i < list.size() && list[i] == key) {return subroot;}
+BTreeNode* find(BTreeNode* root, string itemName, float ItemRating) {
 
-    // if(subroot->is_leaf) {return nullptr;}
-    // return find(subroot->children_[i], key);    
 }
+
 
 void BTreeNode::insert(string itemName, float itemRating) {   //last function to finish-- must be able to insert a child or element
-    if(itemName.empty() || itemRating > 5.0 || itemRating<0.0) {return;}    //protects against invalid insertions
+    if(itemName.empty() || itemRating > 5.0 || itemRating < 0.0) {return;}    //protects against invalid insertions
 
     if(this->children_.empty()) {
         BTreeNode * newNode = new BTreeNode(itemName, itemRating, true, *this);
@@ -77,7 +69,7 @@ void BTreeNode::insert(string itemName, float itemRating) {   //last function to
         }
     }
 
-    // if(subroot->elements_.size() >= order_) {
+    // if(this->children_.size() >= order_) {   //this needs tons of work-- no clue how to handle this case
     //     BTreeNode * newSubroot = new BTreeNode(false, order_);
     //     newSubroot->children_.push_back(subroot);
     //     split_child(newSubroot, 0);
@@ -86,21 +78,29 @@ void BTreeNode::insert(string itemName, float itemRating) {   //last function to
 
 }
 
-vector<int> BTreeNode::traverse(BTreeNode* root) {  //essentially depth first until item rating isn't -1 from root, then BFS from there
-    vector<int> v;
+vector<BTreeNode*> BTreeNode::traverse(BTreeNode* root) {  //essentially depth first until item rating isn't -1 from root, then BFS from there
+    vector<BTreeNode*> v;
+    v.push_back(root);
     traverse_(root, v);
     return v;
 }
 
-void BTreeNode::traverse_(BTreeNode* root, vector<int> & vector) {
-    // if(root == nullptr) {return;}
+void BTreeNode::traverse_(BTreeNode* subroot, vector<BTreeNode*> & vector) {
+    if(subroot == nullptr) {return;}
 
-    // for(size_t index = 0; index < root->elements_.size(); index++) {
-    //     if(!root->is_leaf) {
-    //         traverse_(root->children_[index], vector);
-    //     }
-    //     vector.push_back(root->elements_[index]);
-    // }
+    if(subroot->itemRating_ < 0.0) {
+        vector.push_back(subroot);
+        traverse_(subroot->children_[0], vector);
+    }
+
+    BTreeNode * temp = subroot->children_[0];
+    unsigned int count = 0;
+    while(temp != nullptr && count < subroot->order_) {
+        vector.push_back(temp);
+        count++;
+        temp = subroot->children_[count];
+    }
+    traverse_(temp->children_[0], vector);
 }
 
 // void BTreeNode::split_child(BTreeNode* parent, int child_index) {    //THIS IS GOING TO BE THE HARDEST METHOD 

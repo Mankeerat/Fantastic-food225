@@ -23,10 +23,10 @@ class BTreeNode {
         void clear(BTreeNode* subroot);
         BTreeNode* copy(const BTreeNode & subroot);
 
-        BTreeNode* find(BTreeNode* subroot, int key);
+        BTreeNode* find(BTreeNode* root, string itemName, float ItemRating);
         void insert(string itemName, float itemRating);
-        vector<int> traverse(BTreeNode* root);
-        void traverse_(BTreeNode* root, vector<int> & vector);
+        vector<BTreeNode*> traverse(BTreeNode* root);
+        void traverse_(BTreeNode* subroot, vector<BTreeNode*> & vector);
         void split_child(BTreeNode* parent, int child_index);
     
     private:

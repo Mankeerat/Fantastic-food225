@@ -1,18 +1,13 @@
 #include <iostream>
-#include <string>
-#include <algorithm>
-#include <vector>
 #include "BTreeNode.h"
 
-using std::string;
-using std::vector;
 using std::cout;
 using std::cin;
 using std::endl;
 
 int main() {
 /* sudo code for how we are going to construct the BTree 
-
+    map<string, int> inputData;
     string prompt = "";
     float rating = 0.0;
     cout << "Please input the Product Name: "
@@ -113,7 +108,7 @@ int main() {
     root->children[25] = nodeZ;
 
     for(int i = 0; i < inputData.size(); i++) {
-        char first = inputData[i.first[0]];
+        char first = inputData[i->first[0]];
 
         switch(first){
             case('a'):
@@ -197,7 +192,8 @@ int main() {
             base: 
                 break;
         }
-            
+        
+        
 
 
     }
