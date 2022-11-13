@@ -7,7 +7,20 @@ using std::endl;
 
 int main() {
 /* sudo code for how we are going to construct the BTree 
-    map<string, int> inputData;
+    map<string, float> inputData;
+    inputData["apple"] = 4.5;
+    inputData["banana"] = 4.0;
+    inputData["cake"] = 4.2;
+    inputData["candy"] = 2.6;
+    inputData["donut"] = 1.1;
+    inputData["radio"] = 4.9;
+    inputData["chair"] = 4.5;
+    inputData["desk"] = 6.2;    //test case for out of bounds upper
+    inputData[headphones] = -0.2 //test case for out of bounds lower
+    inputData["nightstand"] = 3.9;
+    inputData["gift"] = 2.8;
+    inputData["glasses"] = 4.3;
+
     string prompt = "";
     float rating = 0.0;
     cout << "Please input the Product Name: "

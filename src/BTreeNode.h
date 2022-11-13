@@ -24,6 +24,8 @@ class BTreeNode {
         BTreeNode* copy(const BTreeNode & subroot);
 
         BTreeNode* find(BTreeNode* root, string itemName, float ItemRating);
+        vector<BTreeNode*> findAll(BTreeNode * root, string itemName, float itemRating);
+        void findAllHelper(BTreeNode * subroot, vector<BTreeNode*> vec, string itemName, float itemRating);        
         void insert(string itemName, float itemRating);
         vector<BTreeNode*> traverse(BTreeNode* root);
         void traverse_(BTreeNode* subroot, vector<BTreeNode*> & vector);
