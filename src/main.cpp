@@ -6,7 +6,7 @@ using std::cin;
 using std::endl;
 
 int main() {
-/* sudo code for how we are going to construct the BTree 
+/* sudo code for how we are going to construct the BTree */
     map<string, float> inputData;
     inputData["apple"] = 4.5;
     inputData["banana"] = 4.0;
@@ -16,201 +16,213 @@ int main() {
     inputData["radio"] = 4.9;
     inputData["chair"] = 4.5;
     inputData["desk"] = 6.2;    //test case for out of bounds upper
-    inputData[headphones] = -0.2 //test case for out of bounds lower
+    inputData["headphones"] = -0.2; //test case for out of bounds lower
     inputData["nightstand"] = 3.9;
     inputData["gift"] = 2.8;
     inputData["glasses"] = 4.3;
+    inputData["sweatpants"] = 5.0;
+    inputData["notecards"] = 4.3;
+    inputData["toner"] = 1.5;
+    inputData["pen"] = 5.0; //bug here-- stores as one review instead of two
+    inputData["pen"] = 4.0;
+    inputData["canvas"] = 4.0;
+    inputData["graphic_tee_shirt"] = 3.8;
+    inputData["jeans"] = 4.8;
+    inputData["old_headphones"] = 0.0;
+    inputData["silver_necklace"] = 1.0;
+    inputData["bracelet"] = -1.0;
+
 
     string prompt = "";
     float rating = 0.0;
-    cout << "Please input the Product Name: "
-    cin << prompt <<endl;;
-    cout<< "Please input the rating of the Product: "
-    cin << rating << endl;
+    cout << "Please input the Product Name: "<<endl;
+    cin >> prompt;
+    cout<< "Please input the rating of the Product: " << endl;
+    cin >> rating;
+    
     bool flag = false;
     if(prompt == "" || rating < 0.0 || rating > 5.0) {
         flag = true;
         while(flag) {
-            cout << "Please keep your rating 1-5: ";
-            cin << rating << endl;
-            cout << "and input a valid product name: ";
-            cin << prompt << endl;
+            cout << "Please keep your rating 1-5: "<<endl;
+            cin >> rating;
+            cout << "and input a valid product name: "<<endl;
+            cin >> prompt;
             if(prompt != "" && rating >= 0.0 && rating <= 5.0) {
                 flag = false;
             }
         }
     }
+    BTreeNode * temp = nullptr;
+    BTreeNode * root = new BTreeNode(prompt, rating, false, temp);    //constructs root node with food name and rating to find 
+    
+    BTreeNode * nodeA = new BTreeNode("a", -1, false, root);
+    root->setChild(nodeA);
 
-    BTreeNode * root(prompt, rating, false, nullptr);    //constructs root node with food name and rating to find 
-    BTreeNode * nodeA = ("a", -1, false, root);
-    root->children[0] = nodeA;
+    BTreeNode * nodeB = new BTreeNode("b", -1, false, root);
+    root->setChild(nodeB);
 
-    BTreeNode * nodeB = ("b", -1, false, root);
-    root->children[1] = nodeB;
+    BTreeNode * nodeC = new BTreeNode("c", -1, false, root);
+    root->setChild(nodeC);
 
-    BTreeNode * nodeC = ("c", -1, false, root);
-    root->children[2] = nodeC;
+    BTreeNode * nodeD = new BTreeNode("d", -1, false, root);
+    root->setChild(nodeD);
 
-    BTreeNode * nodeD = ("d", -1, false, root);
-    root->children[3] = nodeD;
+    BTreeNode * nodeE = new BTreeNode("e", -1, false, root);
+    root->setChild(nodeE);
 
-    BTreeNode * nodeE = ("e", -1, false, root);
-    root->children[4] = nodeE;
+    BTreeNode * nodeF = new BTreeNode("f", -1, false, root);
+    root->setChild(nodeF);
 
-    BTreeNode * nodeF = ("f", -1, false, root);
-    root->children[5] = nodeF;
+    BTreeNode * nodeG = new BTreeNode("g", -1, false, root);
+    root->setChild(nodeG);
 
-    BTreeNode * nodeG = ("g", -1, false, root);
-    root->children[6] = nodeG;
+    BTreeNode * nodeH = new BTreeNode("h", -1, false, root);
+    root->setChild(nodeH);
 
-    BTreeNode * nodeH = ("h", -1, false, root);
-    root->children[7] = nodeH;
+    BTreeNode * nodeI = new BTreeNode("i", -1, false, root);
+    root->setChild(nodeI);
 
-    BTreeNode * nodeI = ("i", -1, false, root);
-    root->children[8] = nodeI;
+    BTreeNode * nodeJ = new BTreeNode("j", -1, false, root);
+    root->setChild(nodeJ);
 
-    BTreeNode * nodeJ = ("j", -1, false, root);
-    root->children[9] = nodeJ;
+    BTreeNode * nodeK = new BTreeNode("k", -1, false, root);
+    root->setChild(nodeK);
 
-    BTreeNode * nodeK = ("k", -1, false, root);
-    root->children[10] = nodeK;
+    BTreeNode * nodeL = new BTreeNode("l", -1, false, root);
+    root->setChild(nodeL);
 
-    BTreeNode * nodeL = ("l", -1, false, root);
-    root->children[11] = nodeL;
+    BTreeNode * nodeM = new BTreeNode("m", -1, false, root);
+    root->setChild(nodeM);
 
-    BTreeNode * nodeM = ("m", -1, false, root);
-    root->children[12] = nodeM;
+    BTreeNode * nodeN = new BTreeNode("n", -1, false, root);
+    root->setChild(nodeN);
 
-    BTreeNode * nodeN = ("n", -1, false, root);
-    root->children[13] = nodeN;
+    BTreeNode * nodeO = new BTreeNode("o", -1, false, root);
+    root->setChild(nodeO);
 
-    BTreeNode * nodeO = ("o", -1, false, root);
-    root->children[14] = nodeO;
+    BTreeNode * nodeP = new BTreeNode("p", -1, false, root);
+    root->setChild(nodeP);
 
-    BTreeNode * nodeP = ("p", -1, false, root);
-    root->children[15] = nodeP;
+    BTreeNode * nodeQ = new BTreeNode("q", -1, false, root);
+    root->setChild(nodeQ);
 
-    BTreeNode * nodeQ = ("q", -1, false, root);
-    root->children[16] = nodeR;
+    BTreeNode * nodeR = new BTreeNode("r", -1, false, root);
+    root->setChild(nodeR);
 
-    BTreeNode * nodeR = ("r", -1, false, root);
-    root->children[17] = nodeR;
+    BTreeNode * nodeS = new BTreeNode("s", -1, false, root);
+    root->setChild(nodeS);
 
-    BTreeNode * nodeS = ("s", -1, false, root);
-    root->children[18] = nodeS;
+    BTreeNode * nodeT = new BTreeNode("t", -1, false, root);
+    root->setChild(nodeT);
 
-    BTreeNode * nodeT = ("t", -1, false, root);
-    root->children[19] = nodeT;
+    BTreeNode * nodeU = new BTreeNode("u", -1, false, root);
+    root->setChild(nodeU);
 
-    BTreeNode * nodeU = ("u", -1, false, root);
-    root->children[20] = nodeU;
+    BTreeNode * nodeV = new BTreeNode("v", -1, false, root);
+    root->setChild(nodeV);
 
-    BTreeNode * nodeV = ("v", -1, false, root);
-    root->children[21] = nodeV;
+    BTreeNode * nodeW = new BTreeNode("w", -1, false, root);
+    root->setChild(nodeW);
 
-    BTreeNode * nodeW = ("w", -1, false, root);
-    root->children[22] = nodeW;
+    BTreeNode * nodeX = new BTreeNode("x", -1, false, root);
+    root->setChild(nodeX);
 
-    BTreeNode * nodeX = ("x", -1, false, root);
-    root->children[23] = nodeX;
+    BTreeNode * nodeY = new BTreeNode("y", -1, false, root);
+    root->setChild(nodeY);
 
-    BTreeNode * nodeY = ("y", -1, false, root);
-    root->children[24] = nodeY;
+    BTreeNode * nodeZ = new BTreeNode("z", -1, false, root);
+    root->setChild(nodeZ);
 
-    BTreeNode * nodeZ = ("z", -1, false, root);
-    root->children[25] = nodeZ;
 
-    for(int i = 0; i < inputData.size(); i++) {
-        char first = inputData[i->first[0]];
+    for(map<string, float>::iterator it = inputData.begin(); it != inputData.end(); it++) {
+        char chr = it->first.at(0);
 
-        switch(first){
+        switch(chr){
             case('a'):
-                nodeA->insert(inputData[i]->first, inputData[i]->second);
+                nodeA->insert(it->first, it->second);
                 break;
             case('b'):
-                nodeB->insert(inputData[i]);
+                nodeB->insert(it->first, it->second);
                 break;
             case('c'):
-                nodeC->insert(inputData[i]);
+                nodeC->insert(it->first, it->second);
                 break;
             case('d'):
-                nodeD->insert(inputData[i]);
+                nodeD->insert(it->first, it->second);
                 break;
             case('e'):
-                nodeE->insert(inputData[i]);
+                nodeE->insert(it->first, it->second);
                 break;
             case('f'):
-                nodeF->insert(inputData[i]);
+                nodeF->insert(it->first, it->second);
                 break;
             case('g'):
-                nodeG->insert(inputData[i]);
+                nodeG->insert(it->first, it->second);
                 break;
             case('h'):
-                nodeH->insert(inputData[i]);
+                nodeH->insert(it->first, it->second);
                 break;
             case('i'):
-                nodeI->insert(inputData[i]);
+                nodeI->insert(it->first, it->second);
                 break;
             case('j'):
-                nodeJ->insert(inputData[i]);
+                nodeJ->insert(it->first, it->second);
                 break;
             case('k'):
-                nodeK->insert(inputData[i]);
+                nodeK->insert(it->first, it->second);
                 break;
             case('l'):
-                nodeL->insert(inputData[i]);
+                nodeL->insert(it->first, it->second);
                 break;
             case('m'):
-                nodeM->insert(inputData[i]);
+                nodeM->insert(it->first, it->second);
                 break;
             case('n'):
-                nodeN->insert(inputData[i]);
+                nodeN->insert(it->first, it->second);
                 break;
             case('o'):
-                nodeO->insert(inputData[i]);
+                nodeO->insert(it->first, it->second);
                 break;
             case('p'):
-                nodeP->insert(inputData[i]);
+                nodeP->insert(it->first, it->second);
                 break;
             case('q'):
-                nodeQ->insert(inputData[i]);
+                nodeQ->insert(it->first, it->second);
                 break;
             case('r'):
-                nodeR->insert(inputData[i]);
+                nodeR->insert(it->first, it->second);
                 break;
             case('s'):
-                nodeS->insert(inputData[i]);
+                nodeS->insert(it->first, it->second);
                 break;
             case('t'):
-                nodeT->insert(inputData[i]);
+                nodeT->insert(it->first, it->second);
                 break;
             case('u'):
-                nodeU->insert(inputData[i]);
+                nodeU->insert(it->first, it->second);
                 break;
             case('v'):
-                nodeV->insert(inputData[i]);
+                nodeV->insert(it->first, it->second);
                 break;
             case('w'):
-                nodeW->insert(inputData[i]);
+                nodeW->insert(it->first, it->second);
                 break;
             case('x'):
-                nodeX->insert(inputData[i]);
+                nodeX->insert(it->first, it->second);
                 break;
             case('y'):
-                nodeY->insert(inputData[i]);
+                nodeY->insert(it->first, it->second);
                 break;
             case('z'):
-                nodeZ->insert(inputData[i]);
+                nodeZ->insert(it->first, it->second);
                 break;
-            base: 
+            default: 
                 break;
         }
-        
-        
-
-
     }
 
-    */
+    root->printTree();
+
     return 0;
 }

@@ -16,9 +16,12 @@ using std::map;
 
 class BTreeNode {
     public:
-        BTreeNode() {};
-        BTreeNode(string itemName, float itemRating, bool is_leaff, BTreeNode & parent);
+        BTreeNode();
+        BTreeNode(string itemName, float itemRating, bool is_leaff, BTreeNode * parent);
         ~BTreeNode();
+        void setChild(BTreeNode* child);
+        void printTree();
+        void printTreeHelper(BTreeNode* root);
         BTreeNode & operator=(const BTreeNode & other);
         void clear(BTreeNode* subroot);
         BTreeNode* copy(const BTreeNode & subroot);
