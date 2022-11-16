@@ -9,7 +9,7 @@ BTreeNode::BTreeNode() {
     order_ = 2;
 }
 
-BTreeNode::BTreeNode(string itemName, float itemRating, bool is_leaff, BTreeNode * parent) {
+BTreeNode::BTreeNode(string itemName, float itemRating, bool is_leaff, BTreeNode* parent) {
     is_leaf = is_leaff;
     itemName_ = itemName;
     itemRating_ = itemRating;
@@ -23,6 +23,22 @@ BTreeNode::~BTreeNode() {
 
 void BTreeNode::setChild(BTreeNode* child) {
     this->children_.push_back(child);
+}
+
+void BTreeNode::setItemName(string itemName) {
+    this->itemName_ = itemName;
+}
+
+string BTreeNode::getItemName() {
+    return this->itemName_;
+}
+
+void BTreeNode::setItemRating(float itemRating) {
+    this->itemRating_ = itemRating;
+}
+
+float BTreeNode::getItemRating() {
+    return this->itemRating_;
 }
 
 void BTreeNode::printTree() {
@@ -51,6 +67,7 @@ void BTreeNode::clear(BTreeNode* subroot) {
 }
 
 BTreeNode* BTreeNode::copy(const BTreeNode & subroot) {  
+    //BTreeNode* newNode = new BTreeNode(subroot->)
     for(size_t i = 0; i < subroot.children_.size(); i++) {
         this->children_.at(i) = subroot.children_.at(i);
     }
@@ -60,25 +77,22 @@ BTreeNode* BTreeNode::copy(const BTreeNode & subroot) {
     return (this);
 }
 
-BTreeNode* BTreeNode::find(BTreeNode* root, string itemName, float itemRating) {   //returns a single review
-    vector<BTreeNode*> v;
-    for(size_t i = 0; i < root->children_.size(); i++) {    //finds all nodes associated with item name on a single level (should give us what we want)
-        if(root->children_[i]->itemName_ == itemName && root->children_[i]->itemRating_ == itemRating) {
-            v.push_back(root->children_[i]);
-        }
-    }
-    
-    if(!v.empty()) {    //returns the best rating out of all nodes found 
-        int index = 0;
-        for(size_t j = 0; j < v.size(); j++) {
-            if(v[j]->itemRating_ > v[index]->itemRating_) {
-                index = j;
-            }
-        }
-        return v[index];
-    }
-    return NULL;
+BTreeNode* BTreeNode::find(BTreeNode* root, string itemName) {   //returns a single review
+    BTreeNode* temp = new BTreeNode();
+    findHelper(root, itemName, temp);
+    return temp;
 }
+
+void BTreeNode::findHelper(BTreeNode* subroot, string itemName, BTreeNode* currBest) {
+    if(subroot == nullptr) {return;}
+    if(subroot->itemRating_ > currBest->itemRating_ && subroot->itemName_ == itemName) {
+        currBest = subroot;
+    }
+    for(size_t i = 0; i < subroot->children_.size(); i++) {
+        findHelper(subroot->children_[i], itemName, currBest);
+    }
+}
+
 
 vector<BTreeNode*> BTreeNode::findAll(BTreeNode * root, string itemName, float itemRating) {   //returns a list of all reviews associated with product and 1-5 star
     vector<BTreeNode*> v;
@@ -128,27 +142,16 @@ void BTreeNode::insert(string itemName, float itemRating) {   //last function to
 
 vector<BTreeNode*> BTreeNode::traverse(BTreeNode* root) {  //essentially depth first until item rating isn't -1 from root, then BFS from there
     vector<BTreeNode*> v;
-    v.push_back(root);
     traverse_(root, v);
     return v;
 }
 
 void BTreeNode::traverse_(BTreeNode* subroot, vector<BTreeNode*> & vector) {
     if(subroot == nullptr) {return;}
-
-    if(subroot->itemRating_ < 0.0) {
-        vector.push_back(subroot);
-        traverse_(subroot->children_[0], vector);
+    vector.push_back(subroot);
+    for(size_t i = 0; i < subroot->children_.size(); i++) {
+        traverse_(subroot->children_[i], vector);
     }
-
-    BTreeNode * temp = subroot->children_[0];
-    unsigned int count = 0;
-    while(temp != nullptr && count < subroot->order_) {
-        vector.push_back(temp);
-        count++;
-        temp = subroot->children_[count];
-    }
-    traverse_(temp->children_[0], vector);
 }
 
 void BTreeNode::split_child(BTreeNode* parent, int child_index) {    //THIS IS GOING TO BE THE HARDEST METHOD 

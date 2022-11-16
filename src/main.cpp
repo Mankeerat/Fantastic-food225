@@ -4,6 +4,7 @@
 using std::cout;
 using std::cin;
 using std::endl;
+using std::to_string;
 
 int main() {
 /* sudo code for how we are going to construct the BTree */
@@ -31,6 +32,7 @@ int main() {
     inputData["old_headphones"] = 0.0;
     inputData["silver_necklace"] = 1.0;
     inputData["bracelet"] = -1.0;
+    inputData["mousepad"] = 6.0;
 
 
     string prompt = "";
@@ -222,7 +224,46 @@ int main() {
         }
     }
 
+    //Tests for construction of entire BTree (should be alphabetized)   //passes (except for duplicate nodes)
+    cout<<"Tests for construction of BTree: "<<endl;
     root->printTree();
+
+    //Tests for =operator (basically a test for copy and clear)
+    cout<<"Simple Test for =operator: "<<endl;  //passed
+    BTreeNode* one = new BTreeNode("Shoes", 3.6, true, root);
+    BTreeNode* two = one;
+    cout<< one->getItemName()<< " "<<to_string(one->getItemRating())<<endl;
+    cout<< two->getItemName()<< " "<<to_string(two->getItemRating())<<endl;
+
+    cout<<"Medium Test for =operator:"<<endl;   //failed-- I think copy is wrong-- will have to fix this 
+    one->setItemName("Sneakers");
+    two->setItemRating(4.1);
+    cout<< one->getItemName()<< " "<<to_string(one->getItemRating())<<endl;
+    cout<< two->getItemName()<< " "<<to_string(two->getItemRating())<<endl;
+
+    //Test for find method: should return the item with the best rating for that given item    //Fails. Nothing found for banana
+    cout<<"Test for find Method: "<<endl;
+    string name= "banana";
+    BTreeNode* found = root->find(root, name);
+    cout<<found->getItemName()<<to_string(found->getItemRating())<<endl;
+
+    //Test for findAll method; should return item name and it's rating -> fails: prints empty vector the entire time 
+    cout<<"Test for findAll Method: "<<endl;
+    string name_find = "apple";
+    float rating_find = 4.5;
+    vector<BTreeNode*> findVector = root->findAll(root, name_find, rating_find);
+    if(findVector.empty()) {cout<<"Vector is Empty"<<endl;}
+    for(size_t vecCount = 0; vecCount < findVector.size(); vecCount++) {
+        cout<< findVector[vecCount]->getItemName()<< " "<<to_string(findVector[vecCount]->getItemRating())<<endl;
+    }
+
+    //Test for Traversal Method -> FAILS: SEG FAULT
+    // cout<<"Testing Traversal: "<<endl;
+    // vector<BTreeNode*> traversalVector = root->traverse(root);
+    // for(size_t vec2Count = 0; vec2Count < traversalVector.size(); vec2Count++) {
+    //     cout<< findVector[vec2Count]->getItemName()<< " " <<to_string(findVector[vec2Count]->getItemRating())<<endl;
+    // }
+
 
     return 0;
 }

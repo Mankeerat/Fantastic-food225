@@ -20,13 +20,19 @@ class BTreeNode {
         BTreeNode(string itemName, float itemRating, bool is_leaff, BTreeNode * parent);
         ~BTreeNode();
         void setChild(BTreeNode* child);
+        void setItemName(string itemName);
+        string getItemName();
+        void setItemRating(float itemRating);
+        float getItemRating();
+
         void printTree();
         void printTreeHelper(BTreeNode* root);
         BTreeNode & operator=(const BTreeNode & other);
         void clear(BTreeNode* subroot);
         BTreeNode* copy(const BTreeNode & subroot);
 
-        BTreeNode* find(BTreeNode* root, string itemName, float ItemRating);
+        BTreeNode* find(BTreeNode* root, string itemName);
+        void findHelper(BTreeNode* subroot, string itemName, BTreeNode* currBest);
         vector<BTreeNode*> findAll(BTreeNode * root, string itemName, float itemRating);
         void findAllHelper(BTreeNode * subroot, vector<BTreeNode*> vec, string itemName, float itemRating);        
         void insert(string itemName, float itemRating);
