@@ -1,0 +1,23 @@
+# Development Log (Date: 11/11/22 -- 11/18/22)
+
+## Weekly Goals
+    - Get the BTree fully working, and implement a search algorithm for our Tree. 
+    
+## Specific Tasks Completed (and by who)
+    - Mankeerat will finish processing the data set, and start running tests on the current BTree with our current operations on the larger set to iron out any bugs. 
+    - David will fix bugs with "find" algorithms in the BTree class, and finish writing tests for all algorithms and methods written so far. Also fix bugs with copy 
+        constructor and =operator.  
+    - Jason will work on the split child feature of the BTree, which will be difficult, but essential to keeping our BTree Efficient. 
+    - We will meet before the end of this week with either our mentor, or with the whole group to discuss meeting dates over break, 
+        as well as tasks that we would like to 100% accomplish before we return.  
+    
+## Problems Encountered 
+    - Encountered a couple bugs with find and =operator methods-- looking to fix these bugs by the end of the week, so we have all simple operations 
+        done on the BTree before we start implementing the complete data set.
+    - Also, we need to finalize whether we do BFS or DFS, and that will determine how we do split child. Likely it will be BFS, since it is a BTree, but 
+        depending on how it is stored, it may be a super wide tree. 
+    
+## Plans for next week
+    - Start implementing the remaining 2 algorithms on our Tree, and start creating a graph if needed out of it. 
+    - Finish BFS/DFS and implement simple recommendations--> ALSO: fix all bugs with simple methods  
+## Optional: Questions for mentor

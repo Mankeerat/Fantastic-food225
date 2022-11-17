@@ -31,7 +31,7 @@ int main() {
     inputData.insert({"old_headphones", 0.0});
     inputData.insert({"silver_necklace", 1.0});
     inputData.insert({"bracelet", -1.0});
-    inputData.insert({"mousepag", 6.0});
+    inputData.insert({"mousepad", 6.0});
 
     string prompt = "";
     float rating = 0.0;
