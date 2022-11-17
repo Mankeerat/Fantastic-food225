@@ -8,32 +8,30 @@ using std::to_string;
 
 int main() {
 /* sudo code for how we are going to construct the BTree */
-    map<string, float> inputData;
-    inputData["apple"] = 4.5;
-    inputData["banana"] = 4.0;
-    inputData["cake"] = 4.2;
-    inputData["candy"] = 2.6;
-    inputData["donut"] = 1.1;
-    inputData["radio"] = 4.9;
-    inputData["chair"] = 4.5;
-    inputData["desk"] = 6.2;    //test case for out of bounds upper
-    inputData["headphones"] = -0.2; //test case for out of bounds lower
-    inputData["nightstand"] = 3.9;
-    inputData["gift"] = 2.8;
-    inputData["glasses"] = 4.3;
-    inputData["sweatpants"] = 5.0;
-    inputData["notecards"] = 4.3;
-    inputData["toner"] = 1.5;
-    inputData["pen"] = 5.0; //bug here-- stores as one review instead of two
-    inputData["pen"] = 4.0;
-    inputData["canvas"] = 4.0;
-    inputData["graphic_tee_shirt"] = 3.8;
-    inputData["jeans"] = 4.8;
-    inputData["old_headphones"] = 0.0;
-    inputData["silver_necklace"] = 1.0;
-    inputData["bracelet"] = -1.0;
-    inputData["mousepad"] = 6.0;
-
+    multimap<string, float> inputData;
+    inputData.insert({"apple", 4.5});
+    inputData.insert({"banana", 4.0});
+    inputData.insert({"cake", 4.2});
+    inputData.insert({"donut", 1.1});
+    inputData.insert({"radio", 4.9});
+    inputData.insert({"chair", 4.5});
+    inputData.insert({"desk", 6.2}); //test case for out of bounds upper
+    inputData.insert({"headphones", -0.2}); //test case for out of bounds lower
+    inputData.insert({"nightstand", 3.9});
+    inputData.insert({"gift", 2.8});
+    inputData.insert({"glasses", 4.3});
+    inputData.insert({"sweatpants", 5.0});
+    inputData.insert({"notecards", 4.3});
+    inputData.insert({"toner", 1.5});
+    inputData.insert({"pen", 5.0});
+    inputData.insert({"pen", 4.0});
+    inputData.insert({"canvas", 4.0});
+    inputData.insert({"graphic_tee_shirt", 3.8});
+    inputData.insert({"jeans", 4.8});
+    inputData.insert({"old_headphones", 0.0});
+    inputData.insert({"silver_necklace", 1.0});
+    inputData.insert({"bracelet", -1.0});
+    inputData.insert({"mousepag", 6.0});
 
     string prompt = "";
     float rating = 0.0;
