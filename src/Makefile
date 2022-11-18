@@ -14,7 +14,7 @@ $(EXENAME): $(OBJS)
 main.o: main.cpp 
 	$(CXX) $< $(CXXFLAGS)
 
-BTreeNode.o: BTreeNode.cpp
+Graph.o: Graph.cpp
 	$(CXX) $< $(CXXFLAGS)
 
 clean: 
