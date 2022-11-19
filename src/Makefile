@@ -1,5 +1,5 @@
 EXENAME = main
-OBJS = main.o BTreeNode.o
+OBJS = main.o Graph.o
 
 CXX = clang++
 CXXFLAGS = -std=c++0x -c -g -O0 -Wall -Wextra
