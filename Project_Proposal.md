@@ -38,23 +38,24 @@ PageRank: The target time complexity for PageRank is O(V + E), where V is the nu
 
 Timeline:
 
-	Tasks: Implement Data Structure, Data acquisition in that data structure, first algorithm, second algorithm, third algorithm, documentation, results 
-Week of October 31st: 
-Complete Project proposal
-Clean data/get rid of missing values. Implement data structure chosen for the project. Must be able to build data structure, traverse it, and do simple changes on it with standard data (not with dataset yet).  
-Implement the first algorithm on the simple data and test if it works before we start transferring the actual dataset into our application 
-Start data acquisition, little by little figuring out and implementing how we will put our data into our first algorithm 
-Week of November 7th: 
-Complete data acquisition, allowing us to do all of the simple algorithms and manipulations that are expected with our data structure, except on a larger dataset. 
-Compare efficiency to what we expect, and make changes based on inefficiencies that we find 
-Complete the first algorithm on our data structure with our dataset, and implement tests that clearly show how our program runs that algorithm with flying colors 
-Week of November 14th:
-Test for inefficiencies, and if we are going to make any last changes to data structure and organization of datasheet, do it by the end of this week
-Start implementing remaining 2 algorithms, starting off with basic data, and moving to our full size datasheet 
-Start documentation on both running the program, and detailed description of how we implemented the first algorithm 
-Thanksgiving break: 
-Complete remaining 2 algorithms, and have almost all documentation done for those 2 algorithms 
-Final Week: 
-Write out final report with results 
-Final tests, and make sure that our program has minimum inefficiencies 
-Complete documentation, and make sure our Github Repository is organized and professional 
+- Tasks: Implement Data Structure, Data acquisition in that data structure, first algorithm, second algorithm, third algorithm, documentation, results 
+
+- Week of October 31st: 
+	- Complete Project proposal
+	- Clean data/get rid of missing values. Implement data structure chosen for the project. Must be 	able to build data structure, traverse it, and do simple changes on it with standard data (not with dataset yet).  
+	- Implement the first algorithm on the simple data and test if it works before we start 		transferring the actual dataset into our application 
+	- Start data acquisition, little by little figuring out and implementing how we will put our data into our first algorithm 
+- Week of November 7th: 
+	- Complete data acquisition, allowing us to do all of the simple algorithms and manipulations that are expected with our data structure, except on a larger dataset. 
+	- Compare efficiency to what we expect, and make changes based on inefficiencies that we find 
+	- Complete the first algorithm on our data structure with our dataset, and implement tests that clearly show how our program runs that algorithm with flying colors 
+- Week of November 14th:
+	- Test for inefficiencies, and if we are going to make any last changes to data structure and organization of datasheet, do it by the end of this week
+	- Start implementing remaining 2 algorithms, starting off with basic data, and moving to our full size datasheet 
+	- Start documentation on both running the program, and detailed description of how we implemented the first algorithm 
+- Thanksgiving break: 
+	- Complete remaining 2 algorithms, and have almost all documentation done for those 2 algorithms 
+- Final Week: 
+	- Write out final report with results 
+	- Final tests, and make sure that our program has minimum inefficiencies 
+	- Complete documentation, and make sure our Github Repository is organized and professional 
