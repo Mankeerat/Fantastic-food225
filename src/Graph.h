@@ -1,51 +1,34 @@
-#pragma once 
-
+#pragma once
 #include <iostream>
-#include <string>
-#include <stack>
-#include <queue>
 #include <vector>
+#include <queue>
+#include <list>
+#include <stack>
 #include <algorithm>
 #include <map>
 
-using std::string;
-using std::stack;
-using std::vector;
-using std::queue;
 using std::map;
-using std::multimap;
+using std::vector;
+using std::pair;
+using std::queue;
+using std::list;
+using std::stack;
+using std::cout;
+using std::cin;
+using std::endl;
 
-class BTreeNode {
-    public:
-        BTreeNode();
-        BTreeNode(string itemName, float itemRating, bool is_leaff, BTreeNode * parent);
-        ~BTreeNode();
-        void setChild(BTreeNode* child);
-        void setItemName(string itemName);
-        string getItemName();
-        void setItemRating(float itemRating);
-        float getItemRating();
+class Graph {
+    int V, cost[100][100];  //number of vertices in the graph
+    list<int> *adjList;    //adjacency lists
 
-        void printTree();
-        void printTreeHelper(BTreeNode* root);
-        BTreeNode & operator=(const BTreeNode & other);
-        void clear(BTreeNode* subroot);
-        BTreeNode* copy(const BTreeNode & subroot);
-
-        BTreeNode* find(BTreeNode* root, string itemName);
-        void findHelper(BTreeNode* subroot, string itemName, BTreeNode* currBest);
-        vector<BTreeNode*> findAll(BTreeNode * root, string itemName, float itemRating);
-        void findAllHelper(BTreeNode * subroot, vector<BTreeNode*> vec, string itemName, float itemRating);        
-        void insert(string itemName, float itemRating);
-        vector<BTreeNode*> traverse(BTreeNode* root);
-        void traverse_(BTreeNode* subroot, vector<BTreeNode*> & vector);
-        void split_child(BTreeNode* parent, int child_index);
-    
-    private:
-        bool is_leaf;   //will have to update in split_child 
-        string itemName_;
-        float itemRating_;
-        BTreeNode* parent_;
-        unsigned int order_;
-        vector<BTreeNode *> children_;
+    public: 
+        Graph(int v);   //constructor
+        ~Graph();
+        void addEdge(int v, int w, int weight); //adds edge to graph
+        int findShortestPathBFS(int s, int d); //shortest path from source vertex to destination
+        int printShortestPath(int parent[], int s, int d);    //prints shortest path from source to destination
+        void dijkstra(int src);
+        int getMin(int distance[], bool visited[]);
+        void printDijkstra(int distance[], int parent[]);
+        
 };
