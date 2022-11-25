@@ -1,5 +1,5 @@
 #include "Graph.h"
-//This is a wegihted, directed graph implementation if edges are weighted 1 or 2
+//This is a weighted, directed graph implementation if edges are weighted 1 or 2
 Graph::Graph(int v) {
     this->V = v;
     adjList = new list<int>[2*v];
@@ -14,15 +14,17 @@ Graph::~Graph() {
 }
 
 void Graph::addEdge(int v, int w, int weight) {
-    if(weight == 2) {
+    if(weight != 1) {
         adjList[v].push_back(v+V);  //splits edge weighted 2 into 2 edges weighted 1
         adjList[v+V].push_back(w);
     } else {
         adjList[v].push_back(w);
     }
+    // adjList[v].push_back(w);
+    // adjList[w].push_back(v);
 }
 
-int Graph::printShortestPath(int parent[], int s, int d) {
+int Graph::printBFS(int parent[], int s, int d) {
     static int pos = 0;
     
     if(parent[s] == -1) {
@@ -30,7 +32,7 @@ int Graph::printShortestPath(int parent[], int s, int d) {
         cout << endl;
         return pos;
     }
-    printShortestPath(parent, parent[s], d);
+    printBFS(parent, parent[s], d);
     
     pos++;
     if(s < V) {
@@ -49,28 +51,32 @@ int Graph::findShortestPathBFS(int s, int d) {
         parent[i] = -1;
     }
 
-    list<int> queue;    //create a queue for BFS, and mark current node as visited and enqueue it
+    queue<int> q;    //create a queue for BFS, and mark current node as visited and enqueue it
     visited[s] = true;
-    queue.push_back(s);
+    q.push(s);
 
     list<int>::iterator it;
 
-    while(!queue.empty()) {
-        int v = queue.front();
+    while(!q.empty()) {
+        int v = q.front();
         if(v == d) {
-            return printShortestPath(parent, v, d);
+            return printBFS(parent, v, d);
         }
-        queue.pop_front();
+        q.pop();
 
         for(it = adjList[v].begin(); it != adjList[v].end(); ++it) {    //Get all adjacent vertices to v, and if one has not been visited, mark visited and enqueue
             if(!visited[*it]) {
                 visited[*it] = true;
-                queue.push_back(*it);
+                q.push(*it);
                 parent[*it] = v;
             }
         }
 
     }
+    delete[] visited;
+    delete[] parent;
+    visited = nullptr;
+    parent = nullptr;
 }
 
 int Graph::getMin(int distance[], bool visited[]) {
@@ -85,7 +91,7 @@ int Graph::getMin(int distance[], bool visited[]) {
     return minNode;
 }
 
-void Graph::dijkstra(int src) {
+void Graph::dijkstra(int src) { //should also have destination included in this algorithm->need to get around to doing this
     int size = 2*V;
     int parent[size], distance[size];
     bool visited[size];

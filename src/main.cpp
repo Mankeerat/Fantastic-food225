@@ -7,28 +7,20 @@ using std::endl;
 int main()
 {
     //Test for finding shortest path using BFS
-    int V = 4;
-    Graph g(V);
-    g.addEdge(0, 1, 2); //node 1, node 2, cost
-    g.addEdge(0, 2, 2);
-    g.addEdge(1, 2, 1);
-    g.addEdge(1, 3, 1);
-    g.addEdge(2, 0, 1);
-    g.addEdge(2, 3, 2);
-    g.addEdge(3, 3, 2);
+    int vertices = 4;
+    Graph g(vertices);
+    g.addEdge(0, 1, 1); //node 1, node 2, edge weight
+    g.addEdge(0, 2, 7);
+    g.addEdge(1, 2, 5);
+    g.addEdge(1, 4, 4);
+    g.addEdge(4, 3, 2);
+    g.addEdge(2, 3, 6);
  
     int src = 0, dest = 3;
     cout << "\nShortest Distance between " << src << " and " << dest << " is " << g.findShortestPathBFS(src, dest) << endl;
 
     //Test for finding shortest path using Dijkstra's
-    // cout << "Enter n : "; 
-    // cin >> V; 
-    // cout << "Enter cost matrix : \n" ; 
-    // for(int i = 0 ;i < V ; i++){
-    //     for(int j = 0 ; j< V ; j++) { cin >> cost[i][j]; } 
-    // }
-
-    /*Need to figure out a way to calculate cost here-- right now it is just weighted edges*/    
+    //cout << "\nUsing Dijkstra's algorithm, the shortest path between nodes is: "; 
     int src1; 
     cout<<"\nEnter source : " ;  cin >> src1 ;
     g.dijkstra(src1) ;     
