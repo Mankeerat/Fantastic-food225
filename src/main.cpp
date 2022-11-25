@@ -13,7 +13,7 @@ int main()
     g.addEdge(0, 2, 7);
     g.addEdge(1, 2, 5);
     g.addEdge(1, 4, 4);
-    g.addEdge(4, 3, 2);
+    g.addEdge(4, 3, 2); //currently not working for this node: why? 
     g.addEdge(2, 3, 6);
  
     int src = 0, dest = 3;
@@ -25,7 +25,9 @@ int main()
     cout<<"\nEnter source : " ;  cin >> src1 ;
     g.dijkstra(src1) ;     
  
-
+    //Test for cost matrix
+    cout << "Testing Cost Matrix: " << endl;
+    // g.printCost();
     
     return 0;
 }

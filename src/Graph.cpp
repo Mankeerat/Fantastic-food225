@@ -3,6 +3,11 @@
 Graph::Graph(int v) {
     this->V = v;
     adjList = new list<int>[2*v];
+    for(int i = 0; i < 50; i++) {
+        for(int j = 0; j < 50; j++) {
+            cost[i][j] = 1;
+        }
+    }
 }
 
 Graph::~Graph() {
@@ -14,14 +19,15 @@ Graph::~Graph() {
 }
 
 void Graph::addEdge(int v, int w, int weight) {
-    if(weight != 1) {
-        adjList[v].push_back(v+V);  //splits edge weighted 2 into 2 edges weighted 1
-        adjList[v+V].push_back(w);
-    } else {
-        adjList[v].push_back(w);
-    }
-    // adjList[v].push_back(w);
-    // adjList[w].push_back(v);
+    // if(weight != 1) {
+    //     adjList[v].push_back(v+V);  //splits edge weighted 2 into 2 edges weighted 1
+    //     adjList[v+V].push_back(w);
+    // } else {
+    //     adjList[v].push_back(w);
+    // }
+    adjList[v].push_back(w);
+    adjList[w].push_back(v);
+    cost[v][w] = weight;
 }
 
 int Graph::printBFS(int parent[], int s, int d) {
@@ -130,3 +136,13 @@ void Graph::printDijkstra(int distance[], int parent[]) {
         cout<< endl;
     }
 }
+
+// void Graph::printCost() {
+//     cout << "Testing Cost Matrix: " << endl;
+//     for(size_t i = 0; i < 50; i++) {
+//         for(size_t j = 0; j < 50; j++) {
+//             cout << this->cost[i][j] << " ";
+//         }
+//         cout << endl;
+//     }
+// }
