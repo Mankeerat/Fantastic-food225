@@ -20,10 +20,10 @@ using std::cin;
 using std::endl;
 
 class Graph {
-    int V, cost[50][50];  //number of vertices in the graph, and cost matrix
+    int V, cost[20][20];  //number of vertices in the graph, and cost matrix
     list<int> *adjList;    //adjacency lists ->think I will have to create a list of edges instead of a list of ints, otherwise our Dikstra's will not work
-    //vector<vector<Edge>> adjList; //could also use this implementation
-    //vector<Vertex> adjList; //could also use this implementation (could even use a map for this)
+    //vector<vector<Edge>> cost; //could also use this implementation
+    //vector<Vertex> cost; //could also use this implementation (could even use a map for this)
 
     public: 
         Graph(int v);   //constructor

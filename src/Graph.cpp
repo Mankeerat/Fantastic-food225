@@ -3,8 +3,8 @@
 Graph::Graph(int v) {
     this->V = v;
     adjList = new list<int>[2*v];
-    for(int i = 0; i < 50; i++) {
-        for(int j = 0; j < 50; j++) {
+    for(int i = 0; i < 20; i++) {
+        for(int j = 0; j < 20; j++) {
             cost[i][j] = 1;
         }
     }
@@ -137,12 +137,12 @@ void Graph::printDijkstra(int distance[], int parent[]) {
     }
 }
 
-// void Graph::printCost() {
-//     cout << "Testing Cost Matrix: " << endl;
-//     for(size_t i = 0; i < 50; i++) {
-//         for(size_t j = 0; j < 50; j++) {
-//             cout << this->cost[i][j] << " ";
-//         }
-//         cout << endl;
-//     }
-// }
+void Graph::printCost() {
+    cout << "Testing Cost Matrix: " << endl;
+    for(size_t i = 0; i < 20; i++) {
+        for(size_t j = 0; j < 20; j++) {
+            cout << this->cost[i][j] << " ";
+        }
+        cout << endl;
+    }
+}

@@ -26,8 +26,16 @@ int main()
     g.dijkstra(src1) ;     
  
     //Test for cost matrix
-    cout << "Testing Cost Matrix: " << endl;
-    // g.printCost();
+    cout << "Printing Cost Matrix: " << endl;
+    g.printCost();
     
+
+    /*For Dijkstra's need to show:
+        - Neighboring cities: use Dijkstra's to map all distances into a map, and return cities in map with distance less than num
+        - Shortest Distance: Should determine path that takes least amount of nodes (can be multiple)
+        - Shortest Route: This will be accomplished using Pagerank too, but shortest route should determine the path with the least weight
+    */ 
+    
+
     return 0;
 }
