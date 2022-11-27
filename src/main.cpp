@@ -6,28 +6,60 @@ using std::endl;
 
 int main()
 {
+    vector<string> list = {"chicago", "new_york", "madison", "evanston", "urbana", "nashville", "tampa", "miami", "dallas", "austin", "houston",
+        "atlanta", "san_francisco", "los_angeles", "san_diego"
+    };
+    map<int, string> cityMap;
+    int city_count = 0;
+
+    for(size_t num = 0; num < list.size(); num++) {
+        cityMap.insert({city_count, list.at(num)});
+        city_count++;
+    }
+
+    for(auto itr = cityMap.begin(); itr != cityMap.end(); itr++) {
+        cout<< "Number: " << itr->first << "   City: " << itr->second << endl;
+    }
+    //Will need a way (will not be difficult) to return a vector of nodes from print methods in order to find in the map and print the correct city associated with the number
+
     //Test for finding shortest path using BFS
     int vertices = 4;
-    Graph g(vertices);
-    g.addEdge(0, 1, 1); //node 1, node 2, edge weight
-    g.addEdge(0, 2, 7);
-    g.addEdge(1, 2, 5);
-    g.addEdge(1, 4, 4);
-    g.addEdge(4, 3, 2); //currently not working for this node: why? 
-    g.addEdge(2, 3, 6);
+    Graph g1(vertices);
+    g1.addEdge(0, 1, 1); //node 1, node 2, edge weight
+    g1.addEdge(0, 2, 7);
+    g1.addEdge(1, 2, 5);
+    g1.addEdge(1, 4, 4);
+    g1.addEdge(4, 3, 2); //currently not working for this node: why? 
+    g1.addEdge(2, 3, 6);
  
     int src = 0, dest = 3;
-    cout << "\nShortest Distance between " << src << " and " << dest << " is " << g.findShortestPathBFS(src, dest) << endl;
+    //Testing BFS
+    cout<<"Testing BFS: " << endl;
+    cout << "\nShortest Distance between " << src << " and " << dest << " is " << g1.findShortestPathBFS(src, dest) << endl;
 
     //Test for finding shortest path using Dijkstra's
-    //cout << "\nUsing Dijkstra's algorithm, the shortest path between nodes is: "; 
+    cout<<"Testing Dijkstra's: " << endl;
     int src1; 
-    cout<<"\nEnter source : " ;  cin >> src1 ;
-    g.dijkstra(src1) ;     
- 
+    cout<<"\nEnter source: " ;  cin >> src1 ;
+    vector<int> dijkstraVector;
+    dijkstraVector = g1.dijkstra(src1);
+
+    //Tests for nearby cities to your location (given that distance is less than certain threshold)
+    for(size_t d = 0; d < dijkstraVector.size(); d++) {
+        cout << dijkstraVector[d] << endl;
+        if(dijkstraVector[d] <= 1) {
+            string str = "";
+            str = cityMap.find(dijkstraVector[d])->second;  
+            cout << str << endl;
+        }
+    }     
+
+    //Tests for shortest path based on shortest nodes that you will pass through 
+
+
     //Test for cost matrix
-    cout << "Printing Cost Matrix: " << endl;
-    g.printCost();
+    cout << "Testing Cost Matrix: " << endl;
+    g1.printCost();
     
 
     /*For Dijkstra's need to show:

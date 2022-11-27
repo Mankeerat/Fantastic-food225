@@ -3,28 +3,30 @@
 Graph::Graph(int v) {
     this->V = v;
     adjList = new list<int>[2*v];
-    for(int i = 0; i < 20; i++) {
-        for(int j = 0; j < 20; j++) {
+    cost.resize(v+1, vector<int>(v+1));
+    for(size_t i = 0; i < cost.size(); i++) {
+        for(size_t j = 0; j < cost[i].size(); j++) {
             cost[i][j] = 1;
         }
     }
 }
 
-Graph::~Graph() {
+Graph::~Graph() {   //work on this
     for(int i = 0; i < V; i++) {
-        //delete[] adjList[i];
+        delete[] adjList;
         V = 0;
     }
     delete adjList;
+
+    for(size_t i = 0; i < cost.size(); i++) {
+        for(size_t j = 0; j < cost[i].size(); j++) {
+            cost[i][j] = 1;
+        }
+    }
+
 }
 
 void Graph::addEdge(int v, int w, int weight) {
-    // if(weight != 1) {
-    //     adjList[v].push_back(v+V);  //splits edge weighted 2 into 2 edges weighted 1
-    //     adjList[v+V].push_back(w);
-    // } else {
-    //     adjList[v].push_back(w);
-    // }
     adjList[v].push_back(w);
     adjList[w].push_back(v);
     cost[v][w] = weight;
@@ -97,7 +99,7 @@ int Graph::getMin(int distance[], bool visited[]) {
     return minNode;
 }
 
-void Graph::dijkstra(int src) { //should also have destination included in this algorithm->need to get around to doing this
+vector<int> Graph::dijkstra(int src) { //should also have destination included in this algorithm->need to get around to doing this
     int size = 2*V;
     int parent[size], distance[size];
     bool visited[size];
@@ -120,10 +122,12 @@ void Graph::dijkstra(int src) { //should also have destination included in this 
             }
         }
     }
-    printDijkstra(distance, parent);
+    vector<int> v = printDijkstra(distance, parent);
+    return v;
 }
 
-void Graph::printDijkstra(int distance[], int parent[]) {
+vector<int> Graph::printDijkstra(int distance[], int parent[]) {
+    vector<int> distanceVector;
     for(int i = 0; i < V; i ++) {
         int pos = parent[i];
         cout<<i << " <- ";
@@ -134,14 +138,15 @@ void Graph::printDijkstra(int distance[], int parent[]) {
         cout << endl;
         cout<< "::::Distance = " << distance[i];
         cout<< endl;
+        distanceVector.push_back(distance[i]);
     }
+    return distanceVector;
 }
 
 void Graph::printCost() {
-    cout << "Testing Cost Matrix: " << endl;
-    for(size_t i = 0; i < 20; i++) {
-        for(size_t j = 0; j < 20; j++) {
-            cout << this->cost[i][j] << " ";
+    for(size_t i = 0; i < cost.size(); i++) {
+        for(size_t j = 0; j < cost[i].size(); j++) {
+            cout << cost[i][j] << " ";
         }
         cout << endl;
     }

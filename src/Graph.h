@@ -20,7 +20,8 @@ using std::cin;
 using std::endl;
 
 class Graph {
-    int V, cost[20][20];  //number of vertices in the graph, and cost matrix
+    int V; //number of vertices in the graph
+    vector<vector<int>> cost;   //cost matrix
     list<int> *adjList;    //adjacency lists ->think I will have to create a list of edges instead of a list of ints, otherwise our Dikstra's will not work
     //vector<vector<Edge>> cost; //could also use this implementation
     //vector<Vertex> cost; //could also use this implementation (could even use a map for this)
@@ -31,9 +32,9 @@ class Graph {
         void addEdge(int v, int w, int weight); //adds edge to graph
         int findShortestPathBFS(int s, int d); //shortest path from source vertex to destination
         int printBFS(int parent[], int s, int d);    //prints shortest path from source to destination
-        void dijkstra(int src);
+        vector<int> dijkstra(int src);
         int getMin(int distance[], bool visited[]);
-        void printDijkstra(int distance[], int parent[]);
+        vector<int> printDijkstra(int distance[], int parent[]);
         void printCost();
     
 };
