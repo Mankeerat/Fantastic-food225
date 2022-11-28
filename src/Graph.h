@@ -23,8 +23,7 @@ class Graph {
     int V; //number of vertices in the graph
     vector<vector<int>> cost;   //cost matrix
     list<int> *adjList;    //adjacency lists ->think I will have to create a list of edges instead of a list of ints, otherwise our Dikstra's will not work
-    //vector<vector<Edge>> cost; //could also use this implementation
-    //vector<Vertex> cost; //could also use this implementation (could even use a map for this)
+    //vector<vector<int>> adjList;
 
     public: 
         Graph(int v);   //constructor

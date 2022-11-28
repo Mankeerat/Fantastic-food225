@@ -21,9 +21,10 @@ int main()
         cout<< "Number: " << itr->first << "   City: " << itr->second << endl;
     }
     //Will need a way (will not be difficult) to return a vector of nodes from print methods in order to find in the map and print the correct city associated with the number
-
-    //Test for finding shortest path using BFS
-    int vertices = 4;
+    
+    //Testing BFS
+    cout<<"Testing BFS: " << endl;
+    int vertices = 5;
     Graph g1(vertices);
     g1.addEdge(0, 1, 1); //node 1, node 2, edge weight
     g1.addEdge(0, 2, 7);
@@ -32,11 +33,26 @@ int main()
     g1.addEdge(4, 3, 2); //currently not working for this node: why? 
     g1.addEdge(2, 3, 6);
  
-    int src = 0, dest = 3;
-    //Testing BFS
-    cout<<"Testing BFS: " << endl;
+    int src = 2, dest = 3;
+    
     cout << "\nShortest Distance between " << src << " and " << dest << " is " << g1.findShortestPathBFS(src, dest) << endl;
 
+       int v1 = 4;
+        Graph g2(v1);
+        g2.addEdge(0, 1, 2);
+        g2.addEdge(0, 2, 2);
+        g2.addEdge(1, 2, 1);
+        g2.addEdge(1, 3, 1);
+        g2.addEdge(2, 0, 1);
+        g2.addEdge(2, 3, 2);
+        g2.addEdge(3, 3, 2);
+ 
+    int s = 0, d = 3;
+    cout << "\nShortest Distance between " << s
+        << " and " << d << " is "
+        << g2.findShortestPathBFS(s, d);
+
+    cout << "\n" << endl;
     //Test for finding shortest path using Dijkstra's
     cout<<"Testing Dijkstra's: " << endl;
     int src1; 

@@ -3,27 +3,28 @@
 Graph::Graph(int v) {
     this->V = v;
     adjList = new list<int>[2*v];
+    // adjList.resize(v+1, vector<int>(v+1));
     cost.resize(v+1, vector<int>(v+1));
     for(size_t i = 0; i < cost.size(); i++) {
         for(size_t j = 0; j < cost[i].size(); j++) {
             cost[i][j] = 1;
+            //adjList[i][j] = -1;
         }
     }
 }
 
 Graph::~Graph() {   //work on this
-    for(int i = 0; i < V; i++) {
-        delete[] adjList;
-        V = 0;
-    }
-    delete adjList;
-
     for(size_t i = 0; i < cost.size(); i++) {
         for(size_t j = 0; j < cost[i].size(); j++) {
             cost[i][j] = 1;
         }
     }
-
+    // for(size_t u = 0; u < adjList.size(); u++) { for adjacency matrix 
+    //     for(size_t v = 0; v < adjList[u].size(); v++) {
+    //         adjList[u][v] = -1;
+    //     }
+    // }
+    delete[] adjList;
 }
 
 void Graph::addEdge(int v, int w, int weight) {
@@ -63,7 +64,7 @@ int Graph::findShortestPathBFS(int s, int d) {
     visited[s] = true;
     q.push(s);
 
-    list<int>::iterator it;
+    list<int>::iterator it; //comment out for adjacency matrix
 
     while(!q.empty()) {
         int v = q.front();
@@ -79,6 +80,13 @@ int Graph::findShortestPathBFS(int s, int d) {
                 parent[*it] = v;
             }
         }
+        // for(size_t it = 0; it < adjList[v].size(); it++) {   //this works for adjacency matrix instead of list
+        //     if(!visited[adjList[v][it]]) {
+        //         visited[adjList[v][it]] = true;
+        //         q.push(adjList[v][it]);
+        //         parent[adjList[v][it]] = v;
+        //     }
+        // }
 
     }
     delete[] visited;
@@ -116,7 +124,7 @@ vector<int> Graph::dijkstra(int src) { //should also have destination included i
         int u = getMin(distance, visited);
         visited[u] = true;
         for(int v = 0; v < V; v++) {
-            if(!visited[v] && cost[u][v] != 9999 && (distance[v] > distance[u] + cost[u][v])) {
+            if(!visited[v] && cost[u][v] != INT_MAX && (distance[v] > distance[u] + cost[u][v])) {
                 distance[v] = distance[u] + cost[u][v];
                 parent[v] = u;
             }
