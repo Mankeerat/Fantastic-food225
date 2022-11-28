@@ -1,4 +1,23 @@
 #include "Graph.h"
+
+map<string, int> mapDistanceGraph(vector<int> & v, map<int, string> & m) {  //might move to utils file
+    map<string, int> result;
+    for(size_t i = 0; i < v.size(); i++) {
+        if(m.find(i) != m.end()) {
+            result[m.find(i)->second] = v[i];
+        }
+    }
+    return result;
+}
+
+void printDistanceMap(map<string, int> & m) {
+    for(auto itr = m.begin(); itr != m.end(); ++itr) {
+        cout << itr->first << " " << itr->second << endl;
+    }
+    cout << "\n" << endl;
+}
+
+
 //This is a weighted, directed graph implementation if edges are weighted 1 or 2
 Graph::Graph(int v) {
     this->V = v;
@@ -33,7 +52,7 @@ void Graph::addEdge(int v, int w, int weight) {
     cost[v][w] = weight;
 }
 
-int Graph::printBFS(int parent[], int s, int d) {
+int Graph::printBFS(vector<int> & parent, int s, int d) {
     static int pos = 0;
     
     if(parent[s] == -1) {
@@ -52,13 +71,8 @@ int Graph::printBFS(int parent[], int s, int d) {
 }
 
 int Graph::findShortestPathBFS(int s, int d) {
-    bool *visited = new bool[2*V];
-    int *parent = new int[2*V];
-
-    for(int i = 0; i < 2*V; i++) {
-        visited[i] = false;
-        parent[i] = -1;
-    }
+    vector<bool> visited(2*V, false);
+    vector<int> parent(2*V, -1);
 
     queue<int> q;    //create a queue for BFS, and mark current node as visited and enqueue it
     visited[s] = true;
@@ -89,10 +103,6 @@ int Graph::findShortestPathBFS(int s, int d) {
         // }
 
     }
-    delete[] visited;
-    delete[] parent;
-    visited = nullptr;
-    parent = nullptr;
 }
 
 int Graph::getMin(int distance[], bool visited[]) {
@@ -148,14 +158,16 @@ vector<int> Graph::printDijkstra(int distance[], int parent[]) {
         cout<< endl;
         distanceVector.push_back(distance[i]);
     }
+    cout << "\n" << endl;
     return distanceVector;
 }
 
-void Graph::printCost() {
+void Graph::printCostMatrix() {
     for(size_t i = 0; i < cost.size(); i++) {
         for(size_t j = 0; j < cost[i].size(); j++) {
             cout << cost[i][j] << " ";
         }
         cout << endl;
     }
+    cout << "\n" << endl;
 }

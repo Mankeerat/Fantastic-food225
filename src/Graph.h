@@ -19,6 +19,10 @@ using std::cout;
 using std::cin;
 using std::endl;
 
+map<string, int> mapDistanceGraph(vector<int> & v, map<int, string> & m);
+void printDistanceMap(map<string, int> & m);
+
+
 class Graph {
     int V; //number of vertices in the graph
     vector<vector<int>> cost;   //cost matrix
@@ -29,12 +33,14 @@ class Graph {
         Graph(int v);   //constructor
         ~Graph();
         void addEdge(int v, int w, int weight); //adds edge to graph
+        
         int findShortestPathBFS(int s, int d); //shortest path from source vertex to destination
-        int printBFS(int parent[], int s, int d);    //prints shortest path from source to destination
+        int printBFS(vector<int> & parent, int s, int d);    //prints shortest path from source to destination
         vector<int> dijkstra(int src);
         int getMin(int distance[], bool visited[]);
         vector<int> printDijkstra(int distance[], int parent[]);
-        void printCost();
+        
+        void printCostMatrix();
     
 };
 
