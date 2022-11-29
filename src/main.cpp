@@ -44,15 +44,15 @@ int main()
     cout << "Graph 1: "<< endl;
     cout << "\nShortest Distance between " << src << " and " << dest << " is " << g1.findShortestPathBFS(src, dest) << endl;
 
-       int v1 = 4;
-        Graph g2(v1);
-        g2.addEdge(0, 1, 2);
-        g2.addEdge(0, 2, 2);
-        g2.addEdge(1, 2, 1);
-        g2.addEdge(1, 3, 1);
-        g2.addEdge(2, 0, 1);
-        g2.addEdge(2, 3, 2);
-        g2.addEdge(3, 3, 2);
+    int v1 = 4;
+    Graph g2(v1);
+    g2.addEdge(0, 1, 2);
+    g2.addEdge(0, 2, 2);
+    g2.addEdge(1, 2, 1);
+    g2.addEdge(1, 3, 1);
+    g2.addEdge(2, 0, 1);
+    g2.addEdge(2, 3, 2);
+    g2.addEdge(3, 3, 2);
  
     int s = 3, d = 3;
     cout << "Graph 2: "<< endl;
