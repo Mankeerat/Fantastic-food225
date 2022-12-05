@@ -1,33 +1,14 @@
 #include "Graph.h"
 
-map<string, int> mapDistanceGraph(vector<int> & v, map<int, string> & m) {  //might move to utils file
-    map<string, int> result;
-    for(size_t i = 0; i < v.size(); i++) {
-        if(m.find(i) != m.end()) {
-            result[m.find(i)->second] = v[i];
-        }
-    }
-    return result;
-}
 
-void printDistanceMap(map<string, int> & m) {
-    for(auto itr = m.begin(); itr != m.end(); ++itr) {
-        cout << itr->first << " " << itr->second << endl;
-    }
-    cout << "\n" << endl;
-}
-
-
-//This is a weighted, directed graph implementation if edges are weighted 1 or 2
 Graph::Graph(int v) {
     this->V = v;
-    adjList = new list<int>[2*v];
-    // adjList.resize(v+1, vector<int>(v+1));
-    cost.resize(v+1, vector<int>(v+1));
+    adjMatrix.resize(v+1, vector<int>(v));
+    cost.resize(v+1, vector<int>(v));
     for(size_t i = 0; i < cost.size(); i++) {
         for(size_t j = 0; j < cost[i].size(); j++) {
             cost[i][j] = 1;
-            //adjList[i][j] = -1;
+            adjMatrix[i][j] = -1;
         }
     }
 }
@@ -38,18 +19,18 @@ Graph::~Graph() {   //work on this
             cost[i][j] = 1;
         }
     }
-    // for(size_t u = 0; u < adjList.size(); u++) { for adjacency matrix 
-    //     for(size_t v = 0; v < adjList[u].size(); v++) {
-    //         adjList[u][v] = -1;
-    //     }
-    // }
-    delete[] adjList;
+    for(size_t u = 0; u < adjMatrix.size(); u++) {
+        for(size_t v = 0; v < adjMatrix[u].size(); v++) {
+            adjMatrix[u][v] = -1;
+        }
+    }
 }
 
 void Graph::addEdge(int v, int w, int weight) {
-    adjList[v].push_back(w);
-    adjList[w].push_back(v);
+    adjMatrix[v][w] = weight;   //theses can all either be 1, weight, or mix based on implementation.
+    adjMatrix[w][v] = weight;
     cost[v][w] = weight;
+    cost[w][v] = weight;    //this may not be necessary... depends on how we want to do this
 }
 
 int Graph::printBFS(vector<int> & parent, int s, int d) {
@@ -71,14 +52,12 @@ int Graph::printBFS(vector<int> & parent, int s, int d) {
 }
 
 int Graph::findShortestPathBFS(int s, int d) {
-    vector<bool> visited(2*V, false);
-    vector<int> parent(2*V, -1);
+    vector<bool> visited(adjMatrix.size(), false);
+    vector<int> parent(adjMatrix.size(), -1);
 
     queue<int> q;    //create a queue for BFS, and mark current node as visited and enqueue it
     visited[s] = true;
     q.push(s);
-
-    list<int>::iterator it; //comment out for adjacency matrix
 
     while(!q.empty()) {
         int v = q.front();
@@ -87,22 +66,15 @@ int Graph::findShortestPathBFS(int s, int d) {
         }
         q.pop();
 
-        for(it = adjList[v].begin(); it != adjList[v].end(); ++it) {    //Get all adjacent vertices to v, and if one has not been visited, mark visited and enqueue
-            if(!visited[*it]) {
-                visited[*it] = true;
-                q.push(*it);
-                parent[*it] = v;
+        for(size_t it = 0; it < adjMatrix[v].size(); it++) {   //this works for adjacency matrix instead of list
+            if(!visited[it] && adjMatrix[v][it] != -1) {
+                visited[it] = true;
+                q.push(it);
+                parent[it] = v;
             }
         }
-        // for(size_t it = 0; it < adjList[v].size(); it++) {   //this works for adjacency matrix instead of list
-        //     if(!visited[adjList[v][it]]) {
-        //         visited[adjList[v][it]] = true;
-        //         q.push(adjList[v][it]);
-        //         parent[adjList[v][it]] = v;
-        //     }
-        // }
-
     }
+    return -1;
 }
 
 int Graph::getMin(int distance[], bool visited[]) {
@@ -166,6 +138,16 @@ void Graph::printCostMatrix() {
     for(size_t i = 0; i < cost.size(); i++) {
         for(size_t j = 0; j < cost[i].size(); j++) {
             cout << cost[i][j] << " ";
+        }
+        cout << endl;
+    }
+    cout << "\n" << endl;
+}
+
+void Graph::printAdjencyMatrix() {
+    for(size_t i = 0; i < adjMatrix.size(); i++) {
+        for(size_t j = 0; j < adjMatrix[i].size(); j++) {
+            cout << adjMatrix[i][j] << " ";
         }
         cout << endl;
     }

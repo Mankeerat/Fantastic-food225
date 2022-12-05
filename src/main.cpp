@@ -1,8 +1,6 @@
 #include <iostream>
 #include "Graph.h"
-using std::cout;
-using std::cin;
-using std::endl;
+#include "Utils.h"
 
 int main()
 {   
@@ -27,6 +25,7 @@ int main()
     }
     //Will need a way (will not be difficult) to return a vector of nodes from print methods in order to find in the map and print the correct city associated with the number
     
+    
     cout << "\n" << endl;
     //Testing BFS
     cout<<"Testing BFS: " << endl;
@@ -42,25 +41,10 @@ int main()
     int src = 2, dest = 3;
     
     cout << "Graph 1: "<< endl;
-    cout << "\nShortest Distance between " << src << " and " << dest << " is " << g1.findShortestPathBFS(src, dest) << endl;
+    cout << "Shortest Distance between " << src << " and " << dest << " is " << g1.findShortestPathBFS(src, dest) << endl;
 
-    int v1 = 4;
-    Graph g2(v1);
-    g2.addEdge(0, 1, 2);
-    g2.addEdge(0, 2, 2);
-    g2.addEdge(1, 2, 1);
-    g2.addEdge(1, 3, 1);
-    g2.addEdge(2, 0, 1);
-    g2.addEdge(2, 3, 2);
-    g2.addEdge(3, 3, 2);
- 
-    int s = 3, d = 3;
-    cout << "Graph 2: "<< endl;
-    cout << "\nShortest Distance between " << s << " and " << d << " is " << g2.findShortestPathBFS(s, d);
 
     cout << "\n" << endl;
-
-
     //Test for finding shortest path using Dijkstra's
     cout<<"Testing Dijkstra's: " << endl;
     int src1; 
@@ -99,6 +83,10 @@ int main()
     //Test for cost matrix
     cout << "Testing Cost Matrix: " << endl;
     g1.printCostMatrix();
+
+    //Test for adjacency matrix
+    cout << "Testing Adjacency Matrix: " << endl;
+    g1.printAdjencyMatrix();
     
 
     return 0;
