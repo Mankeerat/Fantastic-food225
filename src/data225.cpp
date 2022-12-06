@@ -1,4 +1,6 @@
-#include <bits/stdc++.h>
+#include <iostream>
+#include "Graph.h"
+#include "Utils.h"
 using namespace std;
 void addEdge(int u, int v, int w, int **matrix, bool bidir = true)
 {
@@ -9,12 +11,12 @@ void addEdge(int u, int v, int w, int **matrix, bool bidir = true)
     }
 }
 // Clean_cs225_dataset_start,end,l2distance.txt
-int main()
+int data225()
 {
     freopen("data_10k.txt", "r", stdin);
     freopen("matrix_10k.txt", "w", stdout);
 
-    int V, E; // v is no of vertices and e is no of edgeswsl
+    int V, E; // v is # of vertices and e is # of edges
 
     cin >> V >> E;
 

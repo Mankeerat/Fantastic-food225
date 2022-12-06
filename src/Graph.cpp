@@ -3,25 +3,18 @@
 
 Graph::Graph(int v) {
     this->V = v;
-    adjMatrix.resize(v+1, vector<int>(v));
-    cost.resize(v+1, vector<int>(v));
-    for(size_t i = 0; i < cost.size(); i++) {
-        for(size_t j = 0; j < cost[i].size(); j++) {
-            cost[i][j] = 1;
-            adjMatrix[i][j] = -1;
+    adjMatrix.resize(v, vector<int>(v));
+    for(size_t i = 0; i < adjMatrix.size(); i++) {
+        for(size_t j = 0; j < adjMatrix[i].size(); j++) {
+            adjMatrix[i][j] = 1;
         }
     }
 }
 
 Graph::~Graph() {   //work on this
-    for(size_t i = 0; i < cost.size(); i++) {
-        for(size_t j = 0; j < cost[i].size(); j++) {
-            cost[i][j] = 1;
-        }
-    }
     for(size_t u = 0; u < adjMatrix.size(); u++) {
         for(size_t v = 0; v < adjMatrix[u].size(); v++) {
-            adjMatrix[u][v] = -1;
+            adjMatrix[u][v] = 1;
         }
     }
 }
@@ -29,8 +22,6 @@ Graph::~Graph() {   //work on this
 void Graph::addEdge(int v, int w, int weight) {
     adjMatrix[v][w] = weight;   //theses can all either be 1, weight, or mix based on implementation.
     adjMatrix[w][v] = weight;
-    cost[v][w] = weight;
-    cost[w][v] = weight;    //this may not be necessary... depends on how we want to do this
 }
 
 int Graph::printBFS(vector<int> & parent, int s, int d) {
@@ -78,7 +69,7 @@ int Graph::findShortestPathBFS(int s, int d) {
 }
 
 int Graph::getMin(int distance[], bool visited[]) {
-    int minNode = 0;
+    int minNode = INT_MAX;
     int minValue = INT_MAX;
     for(int i = 0; i < V; i++) {
         if(!visited[i] && distance[i] < minValue) {
@@ -89,7 +80,7 @@ int Graph::getMin(int distance[], bool visited[]) {
     return minNode;
 }
 
-vector<int> Graph::dijkstra(int src) { //should also have destination included in this algorithm->need to get around to doing this
+vector<int> Graph::dijkstra(int src, int dest) { //should also have destination included in this algorithm->need to get around to doing this
     int size = 2*V;
     int parent[size], distance[size];
     bool visited[size];
@@ -102,46 +93,38 @@ vector<int> Graph::dijkstra(int src) { //should also have destination included i
     distance[src] = 0;
     parent[src] = -1;
 
-    for(int g = 0; g < V-1; g++) {
+    for(int i = 0; i < V-1; i++) {
         int u = getMin(distance, visited);
         visited[u] = true;
         for(int v = 0; v < V; v++) {
-            if(!visited[v] && cost[u][v] != INT_MAX && (distance[v] > distance[u] + cost[u][v])) {
-                distance[v] = distance[u] + cost[u][v];
+            int currDistance = distance[u] + adjMatrix[u][v];
+            if(!visited[v] && adjMatrix[u][v] != INT_MAX && (distance[v] > currDistance)) {
+                distance[v] = currDistance;
                 parent[v] = u;
             }
         }
+        if(u == dest) {break;}
     }
-    vector<int> v = printDijkstra(distance, parent);
+    vector<int> v = printDijkstra(distance, parent, dest);
     return v;
 }
 
-vector<int> Graph::printDijkstra(int distance[], int parent[]) {
+vector<int> Graph::printDijkstra(int distance[], int parent[], int d) {
     vector<int> distanceVector;
-    for(int i = 0; i < V; i ++) {
-        int pos = parent[i];
-        cout<<i << " <- ";
+    //for(int i = 0; i < V; i ++) {
+        int pos = parent[d];
+        cout<<d << " <- ";
         while(pos != -1) {
             cout<< pos << " <- ";
             pos = parent[pos];
         }
         cout << endl;
-        cout<< "::::Distance = " << distance[i];
-        cout<< endl;
-        distanceVector.push_back(distance[i]);
-    }
+        cout<< "::::Distance = " << distance[d];
+        cout<< "\n" << endl;
+        distanceVector.push_back(distance[d]);
+    //}
     cout << "\n" << endl;
     return distanceVector;
-}
-
-void Graph::printCostMatrix() {
-    for(size_t i = 0; i < cost.size(); i++) {
-        for(size_t j = 0; j < cost[i].size(); j++) {
-            cout << cost[i][j] << " ";
-        }
-        cout << endl;
-    }
-    cout << "\n" << endl;
 }
 
 void Graph::printAdjencyMatrix() {

@@ -19,9 +19,7 @@ using std::endl;
 
 class Graph {
     int V; //number of vertices in the graph
-    vector<vector<int>> cost;   //cost matrix
-    //list<int> *adjList;    //adjacency lists ->think I will have to create a list of edges instead of a list of ints, otherwise our Dikstra's will not work
-    vector<vector<int>> adjMatrix;
+    vector<vector<int>> adjMatrix;  //adjacency matrix
 
     public: 
         Graph(int v);   //constructor
@@ -30,36 +28,10 @@ class Graph {
         
         int findShortestPathBFS(int s, int d); //shortest path from source vertex to destination
         int printBFS(vector<int> & parent, int s, int d);    //prints shortest path from source to destination
-        vector<int> dijkstra(int src);  //dijkstra's method, which calls getMin as a helper
+        vector<int> dijkstra(int src, int dest);  //dijkstra's method, which calls getMin as a helper
         int getMin(int distance[], bool visited[]);
-        vector<int> printDijkstra(int distance[], int parent[]);
+        vector<int> printDijkstra(int distance[], int parent[], int d);
         
-        void printCostMatrix();
         void printAdjencyMatrix();
     
 };
-
-// struct Vertex {
-//     string name;
-//     Vertex() {name = " ";}
-//     Vertex(string s) : name(s){}
-//     ~Vertex() {name = " ";}
-//     void setVertexName(string s) {this->name = s;}
-//     string getVertexName() {return this->name;}
-// };
-
-// struct Edge {
-//     int weight;
-//     Vertex src;
-//     Vertex dest;
-//     Edge(Vertex v1, Vertex v2, int w) : weight(w), src(v1), dest(v2){}
-//     ~Edge() {
-//         this->weight = 0;
-//         this->src = Vertex();
-//         this->dest = Vertex();
-//     }
-//     void setEdgeWeight(int w) {this->weight = w;}
-//     int getEdgeWeight() {return this->weight;}
-//     Vertex getSourceVertex() {return this->src;}
-//     Vertex getDestVertex() {return this->dest;}
-// };
