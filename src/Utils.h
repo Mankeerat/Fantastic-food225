@@ -23,3 +23,4 @@ using std::endl;
 
 map<string, int> mapDistanceGraph(vector<int> & v, map<int, string> & m);
 void printDistanceMap(map<string, int> & m);
+vector<int> nearbyCities(vector<int> v, float maxDistance);
