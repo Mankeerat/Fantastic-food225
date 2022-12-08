@@ -5,15 +5,17 @@
 #include <queue>
 #include <algorithm>
 #include <map>
+#include <utility>
+#include <limits.h>
 
 using std::map;
 using std::vector;
 using std::queue;
 using std::string;
+using std::pair;
 using std::cout;
 using std::cin;
 using std::endl;
-
 
 class Graph {
     int V; //number of vertices in the graph
@@ -34,5 +36,11 @@ class Graph {
         
         void printAdjencyMatrix();
         // void printCostMatrix();
-    
+
+        vector<double> pageRank();
+        vector<double> pageRank(int numIter, double damping);
+        vector<vector<double>> stochastic(const vector<vector<int>>& adjMatrix);
+        void scaleMatrix(vector<vector<double>>& matrix, double scalar);
+        void addMatrices(vector<vector<double>>& matrix, const vector<vector<double>>& addMatrix);
+        void multiplyMatrices(vector<double>& v, const vector<vector<double>>& multMatrix);
 };

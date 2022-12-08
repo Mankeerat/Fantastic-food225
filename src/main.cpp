@@ -149,7 +149,9 @@ int main()
     //Test for adjacency matrix (comment out if you are using the full dataset)
     cout << "Testing Adjacency Matrix: " << endl;
     g1.printAdjencyMatrix();
-    
+
+    cout << "Testing PageRank:" << endl;
+    g1.pageRank();    
 
     return 0;
 }

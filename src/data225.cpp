@@ -1,4 +1,5 @@
 #include <iostream>
+#include <cstring>
 #include "Graph.h"
 #include "Utils.h"
 using namespace std;

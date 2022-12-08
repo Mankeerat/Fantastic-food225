@@ -150,3 +150,123 @@ void Graph::printAdjencyMatrix() {
 //     }
 //     cout << "\n" << endl;
 // }
+
+vector<double> Graph::pageRank() {
+    vector<double> pageRank;
+    int rows = adjMatrix.size();
+    int cols = adjMatrix[0].size();
+    vector<double> ranks(rows, (double) 1 / rows);
+    vector<vector<double>> sMatrix = stochastic(adjMatrix);
+    vector<vector<double>> onesMatrix;
+    for (int i = 0; i < rows; ++i) {
+        vector<double> ones(cols, 1);
+        onesMatrix.push_back(ones);
+    }
+    scaleMatrix(sMatrix, 0.85);
+    scaleMatrix(onesMatrix, 0.15 / rows);
+    addMatrices(sMatrix, onesMatrix);
+    for (int i = 0; i < 100; ++i) {
+        multiplyMatrices(ranks, sMatrix);
+        // cout << "New Iteration: " << i << endl;
+        // for (int i = 0; i < rows; ++i) {
+        //     cout << ranks[i] << '\n';
+        // }
+    }
+    // cout << "Ranks" << endl;
+    // for (int i = 0; i < rows; ++i) {
+    //     cout << ranks[i] << '\n';
+    // }
+    vector<pair<int, double>> sortVec;
+    for (int i = 0; i < rows; ++i) {
+        sortVec.push_back({i, ranks[i]});
+    }
+    sort(sortVec.begin(), sortVec.end(), [](const pair<int, double>& a, const pair<int, double>& b) {
+        return a.second > b.second;
+    });
+    for (int i = 0; i < rows; ++i) {
+        pageRank.push_back(sortVec[i].first);
+    }
+    return pageRank; //cities sorted from highest rank to lowest rank (most busy to least busy)
+}
+
+vector<double> Graph::pageRank(int numIter, double damping) {
+    vector<double> pageRank;
+    int rows = adjMatrix.size();
+    int cols = adjMatrix[0].size();
+    vector<double> ranks(rows, (double) 1 / rows);
+    vector<vector<double>> sMatrix = stochastic(adjMatrix);
+    vector<vector<double>> onesMatrix;
+    for (int i = 0; i < rows; ++i) {
+        vector<double> ones(cols, 1);
+        onesMatrix.push_back(ones);
+    }
+    scaleMatrix(sMatrix, damping);
+    scaleMatrix(onesMatrix, (1 - damping) / rows);
+    addMatrices(sMatrix, onesMatrix);
+    for (int i = 0; i < numIter; ++i) {
+        multiplyMatrices(ranks, sMatrix);
+    }
+    vector<pair<int, double>> sortVec;
+    for (int i = 0; i < rows; ++i) {
+        sortVec.push_back({i, ranks[i]});
+    }
+    sort(sortVec.begin(), sortVec.end(), [](const pair<int, double>& a, const pair<int, double>& b) {
+        return a.second > b.second;
+    });
+    for (int i = 0; i < rows; ++i) {
+        pageRank.push_back(sortVec[i].first);
+    }
+    return pageRank;
+}
+
+vector<vector<double>> Graph::stochastic(const vector<vector<int>>& adjMatrix) {
+    vector<vector<double>> sMatrix;
+    int rows = adjMatrix.size();
+    int cols = adjMatrix[0].size();
+    for (int i = 0; i < rows; ++i) {
+        vector<double> row(cols, 0);
+        sMatrix.push_back(row);
+    }
+    for (int i = 0; i < cols; ++i) {
+        int colSum = 0;
+        for (int j = 0; j < rows; ++j) {
+            colSum += adjMatrix[j][i];
+        }
+        for (int k = 0; k < rows; ++k) {
+            sMatrix[k][i] = (double) adjMatrix[k][i] / colSum;
+        }
+    }
+    return sMatrix;
+}
+
+void Graph::scaleMatrix(vector<vector<double>>& matrix, double scalar) {
+    int rows = matrix.size();
+    int cols = matrix[0].size();
+    for (int i = 0; i < rows; ++i) {
+        for (int j = 0; j < cols; ++j) {
+            matrix[i][j] *= scalar;
+        }
+    }
+}
+
+void Graph::addMatrices(vector<vector<double>>& matrix, const vector<vector<double>>& addMatrix) {
+    int rows = matrix.size();
+    int cols = matrix[0].size();
+    for (int i = 0; i < rows; ++i) {
+        for (int j = 0; j < cols; ++j) {
+            matrix[i][j] += addMatrix[i][j];
+        }
+    }
+}
+
+void Graph::multiplyMatrices(vector<double>& v, const vector<vector<double>>& multMatrix) {
+    int rows = v.size();
+    int cols = multMatrix[0].size();
+    vector<double> resVector(rows, 0);
+    for (int i = 0; i < rows; ++i) {
+        for (int j = 0; j < cols; ++j) {
+            resVector[i] += (v[i] * multMatrix[i][j]);
+        }
+    }
+    v = resVector;
+}
