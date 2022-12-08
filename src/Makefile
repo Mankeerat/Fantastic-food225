@@ -1,5 +1,5 @@
 EXENAME = main 
-OBJS = main.o Graph.o Utils.o tests.o data225.o
+OBJS = main.o Graph.o Utils.o data225.o #tests.o 
 
 CXX = clang++
 CXXFLAGS = -std=c++0x -c -g -O0 -Wall -Wextra
@@ -14,8 +14,8 @@ $(EXENAME): $(OBJS)
 main.o: main.cpp 
 	$(CXX) $< $(CXXFLAGS)
 
-tests.o: tests.cpp	
-	$(CXX) $< $(CXXFLAGS)
+# tests.o: tests.cpp	
+# 	$(CXX) $< $(CXXFLAGS)
 
 data225.o: data225.cpp	
 	$(CXX) $< $(CXXFLAGS)
