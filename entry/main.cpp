@@ -3,92 +3,81 @@
 #include "Utils.h"
 
 int main() {   
-    cout<< "Loading..."<< endl;
-    cout<<"Welcome to Fantastic Roads!" << endl; //instructions for when we give user prompts
-    /*  // Main Program (comment out if running tests): 
-        //Creating Adjacency matrix: 
-        // Need to construct empty matrix of size needed from data225.cpp, then create a graph using graph.cpp from it. May need to create setter method
-        //int temp = data225(); commented out for efficiency --> need to change makefile and import data225.cpp into header
+    cout<< "Loading Data..."<< endl;
+    //cout<<"Welcome to Fantastic Roads!" << endl; //instructions for when we give user prompts
+///*  // Main Program (comment out if running tests): 
+    //Creating Adjacency matrix: 
+    // Need to construct empty matrix of size needed from data225.cpp, then create a graph using graph.cpp from it. May need to create setter method
+    //int temp = data225(); commented out for efficiency --> need to change makefile and import data225.cpp into header
 
-        //Getting total number of vertices from the matrix
-        ifstream myFile("matrix_10k.txt");
-        string line;
-        int line_counter = 0;
-        if(myFile.is_open()) {
-            while(myFile.peek() != EOF) {
-                getline(myFile, line);
-                line_counter++;
-                //cout << line_counter << endl;
-            }
-            myFile.close();
+    //Getting total number of vertices from the matrix
+    ifstream myFile("matrix_10k.txt");
+    string line;
+    int line_counter = 0;
+    if(myFile.is_open()) {
+        while(myFile.peek() != EOF) {
+            getline(myFile, line);
+            line_counter++;
         }
-        //cout << line_counter << endl;
-        int V = line_counter;   //setting our vertice count to our number of lines, and constructing a graph from that number
-        Graph g(V);
-        vector<vector<int>> matrixVector;   //creates matrix that will be copied into our graph
-        matrixVector.resize(V, vector<int>(V));
+        myFile.close();
+    }
+    int V = line_counter;   //setting our vertice count to our number of lines, and constructing a graph from that number
+    Graph g(V);
+    vector<vector<int>> matrixVector;   //creates matrix that will be copied into our graph
+    matrixVector.resize(V, vector<int>(V));
         
-        int u, v;
-        int w; // getting edges from user
-        g.setMatrix(matrixVector);
+    ifstream myFile2("matrix_10k.txt"); //parses matrix file that was generated in order to set the adjacency matrix in our graph
+    if(myFile2.is_open()) {
+        for(int u = 0; u < V; u++) {
+            for(int v = 0; v < V; v++) {
+                myFile2 >> matrixVector[u][v];
+            }
+        }
+        myFile2.close();
+    }
 
-        int vertices = 5;
-        Graph g1(vertices);
-        g1.addEdge(0, 1, 10); //node 1, node 2, edge weight
-        g1.addEdge(0, 2, 3);
-        g1.addEdge(1, 2, 1);
-        g1.addEdge(2, 1, 4);
-        g1.addEdge(2, 3, 8);
-        g1.addEdge(1, 3, 2);
-        g1.addEdge(2, 4, 2);
-        g1.addEdge(3, 4, 7);
-        g1.addEdge(4, 3, 9);
+    g.setMatrix(matrixVector);
+    cout << "Data Loaded." << endl;
 
-        bool flag = true;
-        while(flag) {
-            int src = 1, dest=5, algorithm = -1, count;
-            vector<int> dijkstraV;
-            cout << "Welcome to Fantastic Roads!" << endl;
-            cout << "Please input your starting location: " << endl;
-            //cin >> src;
-            cout << "Please input your desired destination: " << endl;
-            //cin >> dest;
-            cout << endl;
-            cout<< "Now time to choose your desired route-- your choices are: " << endl;
-            cout << "   - Option 1: Passing through the fewest cities (recommended to avoid traffic to save time) -- enter 1 in console." << endl;
-            cout << "   - Option 2: Shortest distance to location (recommended if gas economy is important) -- enter 2 in console." << endl;
-            cout << "   - Option 3: Ranked roads (recommended if you really trust the computer and want the best of both worlds) -- enter 3 in console." << endl;
-            cin >> algorithm;
+    bool flag = true;
+    while(flag) {
+        int src, dest, algorithm = -1, count;
+        vector<int> dijkstraV;
+        cout << "Welcome to Fantastic Roads!" << endl;
+        cout << "Please input your starting location (0-990): " << endl;
+        cin >> src;
+        cout << "Please input your desired destination (0-990): " << endl;
+        cin >> dest;
+        cout << endl;
+        cout<< "Now time to choose your desired route-- your choices are: " << endl;
+        cout << "   - Option 1: Passing through the fewest cities (recommended to avoid traffic to save time) -- enter 1 in console." << endl;
+        cout << "   - Option 2: Shortest distance to location (recommended if gas economy is important) -- enter 2 in console." << endl;
+        cout << "   - Option 3: Ranked roads (recommended if you really trust the computer and want the best of both worlds) -- enter 3 in console." << endl;
+        cin >> algorithm;
 
-            switch(algorithm) {
-                case(1):
-                    cout << "Route passing through fewest cities, step by step: " << endl;
-                    g1.findShortestPathBFS(src, dest);
-                    break;
-                case(2):
-                    dijkstraV = g1.dijkstra(src, dest);
-                    cout << "Step by step list: ";
-                    count = 1;
-                    for(size_t i = 0; i < dijkstraV.size(); i++) {
-                        cout << "Step " << count << ": " << dijkstraV[i] << endl;
-                        count++;
-                    }
-                    break;
-                case(3):
-                    //Pagerank
-                    break;
-                default:
-                    cout << "INVALID INPUT. Must be between 0 and 2." << endl;
-                    break;
+        switch(algorithm) {
+            case(1):    //BFS
+                cout << "Route passing through fewest cities, step by step: " << endl;
+                 g.findShortestPathBFS(src, dest);
+                cout << endl;
+                break;
+            case(2):    //Dijkstra
+                dijkstraV = g.dijkstra(src, dest);
+                break;
+            case(3):    //Pagerank
+                    
+                break;
+            default:
+                cout << "INVALID INPUT. Must be between 0 and 2." << endl;
+                break;
             }
 
-            cout << "To terminate program, input 0 in console. To pick a new starting location and desired destination, input 1 in console." << endl;
-            cin >> flag;
-        }
+        cout << "To pick a new starting location and desired destination, input 1 in console. To terminate program, input 0 in console. To" << endl;
+        cin >> flag;
+    }
 
-        cout << "Finished running program 'Fantastic Roads'." << endl;
-    // */
-
+    cout << "Finished running program 'Fantastic Roads'." << endl;
+// */
 
     /*TESTS BELOW (comment if running main code, uncomment if you would like to run tests)*/
 
