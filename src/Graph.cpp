@@ -72,7 +72,19 @@ int Graph::findShortestPathBFS(int s, int d) {
     return -1;
 }
 
-int Graph::getMin(int distance[], bool visited[]) {
+// int Graph::getMin(int distance[], bool visited[]) {
+//     int minNode = INT_MAX;
+//     int minValue = INT_MAX;
+//     for(int i = 0; i < V; i++) {
+//         if(!visited[i] && distance[i] < minValue) {
+//             minValue = distance[i];
+//             minNode = i;
+//         }
+//     }
+//     return minNode;
+// }
+
+int Graph::getMin(vector<int> distance, vector<bool> visited) {
     int minNode = INT_MAX;
     int minValue = INT_MAX;
     for(int i = 0; i < V; i++) {
@@ -84,16 +96,47 @@ int Graph::getMin(int distance[], bool visited[]) {
     return minNode;
 }
 
+// vector<int> Graph::dijkstra(int src, int dest) { //should also have destination included in this algorithm->need to get around to doing this
+//     int size = 2*V;
+//     int parent[size];
+//     int distance[size];
+//     bool visited[size];
+
+//     for(int index = 0; index < size; index++) {
+//         visited[index] = false;
+//     }
+
+//     std::fill(distance, distance + V, INT_MAX);
+//     distance[src] = 0;
+//     parent[src] = -1;
+
+//     for(int i = 0; i < V-1; i++) {
+//         int u = getMin(distance, visited);
+//         visited[u] = true;
+//         for(int v = 0; v < V; v++) {
+//             int currDistance = distance[u] + adjMatrix[u][v];
+//             if(!visited[v] && adjMatrix[u][v] != 0 && (distance[v] > currDistance)) {
+//                 distance[v] = currDistance;
+//                 parent[v] = u;
+//             }
+//         }
+//         if(u == dest) {break;}
+//     }
+//     vector<int> v = printDijkstra(distance, parent, dest);
+//     return v;
+// }
+
 vector<int> Graph::dijkstra(int src, int dest) { //should also have destination included in this algorithm->need to get around to doing this
-    int size = 2*V;
-    int parent[size], distance[size];
-    bool visited[size];
+    //int size = 2*V;
+    vector<int> parent(V);
+    vector<int> distance(V, INT_MAX);
+    vector<bool> visited(V, false);
 
-    for(int index = 0; index < size; index++) {
-        visited[index] = false;
-    }
+    // for(int index = 0; index < size; index++) {
+    //     visited[index] = false;
+    // }
 
-    std::fill(distance, distance + V, INT_MAX);
+    //std::fill(distance, distance + V, INT_MAX);
     distance[src] = 0;
     parent[src] = -1;
 
@@ -113,7 +156,25 @@ vector<int> Graph::dijkstra(int src, int dest) { //should also have destination 
     return v;
 }
 
-vector<int> Graph::printDijkstra(int distance[], int parent[], int d) {
+// vector<int> Graph::printDijkstra(int distance[], int parent[], int d) {
+//     vector<int> distanceVector;
+//     //for(int i = 0; i < V; i ++) {
+//         int pos = parent[d];
+//         cout<<d << " <- ";
+//         while(pos != -1) {
+//             cout<< pos << " <- ";
+//             pos = parent[pos];
+//         }
+//         cout << endl;
+//         cout<< "::::Distance = " << distance[d];
+//         cout<< "\n" << endl;
+//         distanceVector.push_back(distance[d]);
+//     //}
+//     cout << "\n" << endl;
+//     return distanceVector;
+// }
+
+vector<int> Graph::printDijkstra(vector<int> distance, vector<int> parent, int d) {
     vector<int> distanceVector;
     //for(int i = 0; i < V; i ++) {
         int pos = parent[d];
@@ -151,26 +212,41 @@ void Graph::printAdjencyMatrix() {
 //     cout << "\n" << endl;
 // }
 
-vector<double> Graph::pageRank() {
-    vector<double> pageRank;
+vector<vector<int>> Graph::getAdjMatrix() {return adjMatrix;};
+
+/**
+ * PageRank Algorithm
+ */
+
+/**
+ * PageRank algorithm to measure how busy each city (node) in the graph data set 
+ * is by counting the number of roads (edges) to each city and the distance between 
+ * each city. The busiest cities have the most roads from other cities.
+ *
+ * Computes the PageRank with 100 iterations and a damping factor of 0.85.
+ *
+ * @return A vector containing cities sorted from most busy to least busy.
+ */
+vector<int> Graph::pageRank() {
+    vector<int> pageRank;
     int rows = adjMatrix.size();
     int cols = adjMatrix[0].size();
     vector<double> ranks(rows, (double) 1 / rows);
     vector<vector<double>> sMatrix = stochastic(adjMatrix);
-    vector<vector<double>> onesMatrix;
+    vector<vector<double>> dampMatrix;
     for (int i = 0; i < rows; ++i) {
-        vector<double> ones(cols, 1);
-        onesMatrix.push_back(ones);
+        vector<double> row(cols, 0.15 / rows);
+        dampMatrix.push_back(row);
     }
     scaleMatrix(sMatrix, 0.85);
-    scaleMatrix(onesMatrix, 0.15 / rows);
-    addMatrices(sMatrix, onesMatrix);
+    addMatrices(sMatrix, dampMatrix);
     for (int i = 0; i < 100; ++i) {
         multiplyMatrices(ranks, sMatrix);
         // cout << "New Iteration: " << i << endl;
         // for (int i = 0; i < rows; ++i) {
         //     cout << ranks[i] << '\n';
         // }
+        // cout << endl;
     }
     // cout << "Ranks" << endl;
     // for (int i = 0; i < rows; ++i) {
@@ -189,20 +265,30 @@ vector<double> Graph::pageRank() {
     return pageRank; //cities sorted from highest rank to lowest rank (most busy to least busy)
 }
 
-vector<double> Graph::pageRank(int numIter, double damping) {
-    vector<double> pageRank;
+/**
+ * Overloaded function with extra parameters.
+ * PageRank algorithm to measure how busy each city (node) in the graph data set 
+ * is by counting the number of roads (edges) to each city and the distance between 
+ * each city. The busiest cities have the most roads from other cities.
+ *
+ * @param numIter Number of iterations PageRank should be computed.
+ * @param damping Damping factor (should be between 0 and 1)
+ *
+ * @return A vector containing cities sorted from most busy to least busy.
+ */
+vector<int> Graph::pageRank(int numIter, double damping) {
+    vector<int> pageRank;
     int rows = adjMatrix.size();
     int cols = adjMatrix[0].size();
     vector<double> ranks(rows, (double) 1 / rows);
     vector<vector<double>> sMatrix = stochastic(adjMatrix);
-    vector<vector<double>> onesMatrix;
+    vector<vector<double>> dampMatrix;
     for (int i = 0; i < rows; ++i) {
-        vector<double> ones(cols, 1);
-        onesMatrix.push_back(ones);
+        vector<double> row(cols, (1 - damping) / rows);
+        dampMatrix.push_back(row);
     }
     scaleMatrix(sMatrix, damping);
-    scaleMatrix(onesMatrix, (1 - damping) / rows);
-    addMatrices(sMatrix, onesMatrix);
+    addMatrices(sMatrix, dampMatrix);
     for (int i = 0; i < numIter; ++i) {
         multiplyMatrices(ranks, sMatrix);
     }
@@ -219,6 +305,18 @@ vector<double> Graph::pageRank(int numIter, double damping) {
     return pageRank;
 }
 
+/**
+ * Matrix Operations for PageRank
+ */
+
+/**
+ * Computes the stochastic matrix of a given matrix in which each column sums to 1.
+ * Creates a new copy so adjMatrix is not modified.
+ *
+ * @param adjMatrix The adjacency matrix of the graph.
+ *
+ * @return A stochastic matrix.
+ */
 vector<vector<double>> Graph::stochastic(const vector<vector<int>>& adjMatrix) {
     vector<vector<double>> sMatrix;
     int rows = adjMatrix.size();
@@ -236,10 +334,23 @@ vector<vector<double>> Graph::stochastic(const vector<vector<int>>& adjMatrix) {
             sMatrix[k][i] = (double) adjMatrix[k][i] / colSum;
         }
     }
+    cout << "Stochastic Matrix:" << endl;
+    for (int i = 0; i < rows; ++i) {
+        for (int j = 0; j < cols; ++j) {
+            cout << sMatrix[i][j] << " ";
+        }
+        cout << '\n';
+    }
     return sMatrix;
 }
 
-void Graph::scaleMatrix(vector<vector<double>>& matrix, double scalar) {
+/**
+ * Scales and modifies a matrix by a given scalar.
+ *
+ * @param matrix Matrix to be scaled and modified.
+ * @param scalar Amount to scale matrix.
+ */
+void scaleMatrix(vector<vector<double>>& matrix, double scalar) {
     int rows = matrix.size();
     int cols = matrix[0].size();
     for (int i = 0; i < rows; ++i) {
@@ -249,7 +360,13 @@ void Graph::scaleMatrix(vector<vector<double>>& matrix, double scalar) {
     }
 }
 
-void Graph::addMatrices(vector<vector<double>>& matrix, const vector<vector<double>>& addMatrix) {
+/**
+ * Modifies a matrix through matrix addition.
+ *
+ * @param matrix Matrix to be modified.
+ * @param addMatrix Matrix to be added.
+ */
+void addMatrices(vector<vector<double>>& matrix, const vector<vector<double>>& addMatrix) {
     int rows = matrix.size();
     int cols = matrix[0].size();
     for (int i = 0; i < rows; ++i) {
@@ -259,7 +376,14 @@ void Graph::addMatrices(vector<vector<double>>& matrix, const vector<vector<doub
     }
 }
 
-void Graph::multiplyMatrices(vector<double>& v, const vector<vector<double>>& multMatrix) {
+/**
+ * Multiplies two given matrices.
+ * This function will only be used to multiply a matrix with a vector.
+ *
+ * @param v Vector to be modifed.
+ * @param multMatrix Matrix to multiply.
+ */
+void multiplyMatrices(vector<double>& v, const vector<vector<double>>& multMatrix) {
     int rows = v.size();
     int cols = multMatrix[0].size();
     vector<double> resVector(rows, 0);
