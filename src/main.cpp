@@ -6,7 +6,7 @@ int main()
 {   
     cout<< "Loading..."<< endl;
     cout<<"Welcome to Fantastic Roads!" << endl; //instructions for when we give user prompts
-    /*  // Main Program: 
+    /*  // Main Program (comment out if running tests): 
         //Creating Adjacency matrix: 
         // Need to construct empty matrix of size needed from data225.cpp, then create a graph using graph.cpp from it. May need to create setter method
 
@@ -67,7 +67,7 @@ int main()
     */
 
 
-    /*TESTS BELOW*/
+    /*TESTS BELOW (comment if running main code, uncomment if you would like to run tests)*/
 
     //GRAPH 1
     int vertices = 5;
