@@ -27,6 +27,7 @@ class Graph {
         ~Graph();   //destructor
         void addEdge(int v, int w, int weight); //adds edge to graph
         void setMatrix(vector<vector<int>> & m);
+        void printAdjencyMatrix();
         
         int findShortestPathBFS(int s, int d); //shortest path from source vertex to destination
         int printBFS(vector<int> & parent, int s, int d);    //prints shortest path from source to destination
@@ -36,8 +37,7 @@ class Graph {
         //vector<int> printDijkstra(int distance[], int parent[], int d);
         vector<int> printDijkstra(vector<int> distance, vector<int> parent, int d);
         
-        void printAdjencyMatrix();
-        // void printCostMatrix();
+        
 
         vector<vector<int>> getAdjMatrix();
 

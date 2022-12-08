@@ -25,8 +25,13 @@ void Graph::addEdge(int v, int w, int weight) {
     adjMatrix[v][w] = weight;   //theses can all either be 1, weight, or mix based on implementation.
     adjMatrix[w][v] = weight;
 }
+
 void Graph::setMatrix(vector<vector<int>> & m) {
-    
+    for(size_t i = 0; i < m.size(); i++) {
+        for(size_t j = 0; j < m[i].size(); j++) {
+            adjMatrix[i][j] = m[i][j];
+        }
+    }
 }
 
 int Graph::printBFS(vector<int> & parent, int s, int d) {
