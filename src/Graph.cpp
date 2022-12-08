@@ -4,17 +4,19 @@
 Graph::Graph(int v) {
     this->V = v;
     adjMatrix.resize(v, vector<int>(v));
+
     for(size_t i = 0; i < adjMatrix.size(); i++) {
         for(size_t j = 0; j < adjMatrix[i].size(); j++) {
-            adjMatrix[i][j] = 1;
+            adjMatrix[i][j] = 0;
         }
     }
+
 }
 
 Graph::~Graph() {   //work on this
     for(size_t u = 0; u < adjMatrix.size(); u++) {
         for(size_t v = 0; v < adjMatrix[u].size(); v++) {
-            adjMatrix[u][v] = 1;
+            adjMatrix[u][v] = 0;
         }
     }
 }
@@ -23,10 +25,13 @@ void Graph::addEdge(int v, int w, int weight) {
     adjMatrix[v][w] = weight;   //theses can all either be 1, weight, or mix based on implementation.
     adjMatrix[w][v] = weight;
 }
+void Graph::setMatrix(vector<vector<int>> & m) {
+    
+}
 
 int Graph::printBFS(vector<int> & parent, int s, int d) {
     static int pos = 0;
-    
+    cout<< endl;
     if(parent[s] == -1) {
         cout << "Shortest Path Between " << s << " and " << d << " is " << " ";
         cout << endl;
@@ -38,7 +43,6 @@ int Graph::printBFS(vector<int> & parent, int s, int d) {
     if(s < V) {
         cout << s << " ";
     }
-    cout << endl;
     return pos;
 }
 
@@ -58,7 +62,7 @@ int Graph::findShortestPathBFS(int s, int d) {
         q.pop();
 
         for(size_t it = 0; it < adjMatrix[v].size(); it++) {   //this works for adjacency matrix instead of list
-            if(!visited[it] && adjMatrix[v][it] != -1) {
+            if(!visited[it] && adjMatrix[v][it] != 0) {
                 visited[it] = true;
                 q.push(it);
                 parent[it] = v;
@@ -98,7 +102,7 @@ vector<int> Graph::dijkstra(int src, int dest) { //should also have destination 
         visited[u] = true;
         for(int v = 0; v < V; v++) {
             int currDistance = distance[u] + adjMatrix[u][v];
-            if(!visited[v] && adjMatrix[u][v] != INT_MAX && (distance[v] > currDistance)) {
+            if(!visited[v] && adjMatrix[u][v] != 0 && (distance[v] > currDistance)) {
                 distance[v] = currDistance;
                 parent[v] = u;
             }
@@ -136,3 +140,13 @@ void Graph::printAdjencyMatrix() {
     }
     cout << "\n" << endl;
 }
+
+// void Graph::printCostMatrix() {
+//     for(size_t i = 0; i < cost.size(); i++) {
+//         for(size_t j = 0; j < cost[i].size(); j++) {
+//             cout << cost[i][j] << " ";
+//         }
+//         cout << endl;
+//     }
+//     cout << "\n" << endl;
+// }

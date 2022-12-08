@@ -18,11 +18,13 @@ using std::endl;
 class Graph {
     int V; //number of vertices in the graph
     vector<vector<int>> adjMatrix;  //adjacency matrix
+    //vector<vector<int>> cost;
 
     public: 
         Graph(int v);   //constructor
         ~Graph();   //destructor
         void addEdge(int v, int w, int weight); //adds edge to graph
+        void setMatrix(vector<vector<int>> & m);
         
         int findShortestPathBFS(int s, int d); //shortest path from source vertex to destination
         int printBFS(vector<int> & parent, int s, int d);    //prints shortest path from source to destination
@@ -31,5 +33,6 @@ class Graph {
         vector<int> printDijkstra(int distance[], int parent[], int d);
         
         void printAdjencyMatrix();
+        // void printCostMatrix();
     
 };
