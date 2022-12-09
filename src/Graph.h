@@ -8,14 +8,7 @@
 #include <utility>
 #include <limits.h>
 
-using std::map;
-using std::vector;
-using std::queue;
-using std::string;
-using std::pair;
-using std::cout;
-using std::cin;
-using std::endl;
+using namespace std;
 
 class Graph {
     int V; //number of vertices in the graph
@@ -26,20 +19,15 @@ class Graph {
         Graph(int v);   //constructor
         ~Graph();   //destructor
         void addEdge(int v, int w, int weight); //adds edge to graph
-        void setMatrix(vector<vector<int>> & m);
+        void setAdjMatrix(vector<vector<int>> & m);
+        vector<vector<int>> getAdjMatrix();
         void printAdjencyMatrix();
         
         int findShortestPathBFS(int s, int d); //shortest path from source vertex to destination
         int printBFS(vector<int> & parent, int s, int d);    //prints shortest path from source to destination
         vector<int> dijkstra(int src, int dest);  //dijkstra's method, which calls getMin as a helper
-        //int getMin(int distance[], bool visited[]);
         int getMin(vector<int> distance, vector<bool> visited);
-        //vector<int> printDijkstra(int distance[], int parent[], int d);
         vector<int> printDijkstra(vector<int> distance, vector<int> parent, int d);
-        
-        
-
-        vector<vector<int>> getAdjMatrix();
 
         vector<int> pageRank();
         vector<int> pageRank(int numIter, double damping);

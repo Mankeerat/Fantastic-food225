@@ -1,6 +1,9 @@
 #include <iostream>
+#include <chrono>
 #include "Graph.h"
 #include "Utils.h"
+
+using namespace std::chrono;
 
 int main() {   
     cout<< "Loading Data..."<< endl;
@@ -11,7 +14,7 @@ int main() {
     //int temp = data225(); commented out for efficiency --> need to change makefile and import data225.cpp into header
 
     //Getting total number of vertices from the matrix
-    ifstream myFile("matrix_10k.txt");
+    ifstream myFile("../tests/data/data_10k.txt");
     string line;
     int line_counter = 0;
     if(myFile.is_open()) {
@@ -21,12 +24,13 @@ int main() {
         }
         myFile.close();
     }
+    cout << "Lines: " << line_counter << endl;
     int V = line_counter;   //setting our vertice count to our number of lines, and constructing a graph from that number
     Graph g(V);
     vector<vector<int>> matrixVector;   //creates matrix that will be copied into our graph
     matrixVector.resize(V, vector<int>(V));
         
-    ifstream myFile2("matrix_10k.txt"); //parses matrix file that was generated in order to set the adjacency matrix in our graph
+    ifstream myFile2("../tests/data/data_10k.txt"); //parses matrix file that was generated in order to set the adjacency matrix in our graph
     if(myFile2.is_open()) {
         for(int u = 0; u < V; u++) {
             for(int v = 0; v < V; v++) {
@@ -36,7 +40,8 @@ int main() {
         myFile2.close();
     }
 
-    g.setMatrix(matrixVector);
+    g.setAdjMatrix(matrixVector);
+    cout << "Rows: " << matrixVector.size() << endl;
     cout << "Data Loaded." << endl;
 
     bool flag = true;
@@ -56,21 +61,30 @@ int main() {
         cin >> algorithm;
 
         switch(algorithm) {
-            case(1):    //BFS
+            case(1): {    //BFS
                 cout << "Route passing through fewest cities, step by step: " << endl;
-                 g.findShortestPathBFS(src, dest);
+                g.findShortestPathBFS(src, dest);
                 cout << endl;
                 break;
-            case(2):    //Dijkstra
+            }
+            case(2): {    //Dijkstra
                 dijkstraV = g.dijkstra(src, dest);
                 break;
-            case(3):    //Pagerank
-                    
+            }
+            case(3): {    //Pagerank
+                cout << "List of Cities From Most Popular to Least Popular:" << endl;
+                auto start = high_resolution_clock::now();
+                g.pageRank();
+                auto stop = high_resolution_clock::now();
+                auto duration = duration_cast<seconds>(stop -start);
+                cout << "PageRank takes " << duration.count() << " seconds to run." << endl;
                 break;
-            default:
+            }
+            default: {
                 cout << "INVALID INPUT. Must be between 0 and 2." << endl;
                 break;
             }
+        }
 
         cout << "To pick a new starting location and desired destination, input 1 in console. To terminate program, input 0 in console. To" << endl;
         cin >> flag;
