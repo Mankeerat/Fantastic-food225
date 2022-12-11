@@ -217,7 +217,7 @@ vector<int> Graph::pageRank(int src, int dest) {
     }
     cout << "Starting City is Rank " << srcRank << "." << endl;
     cout << "Destination City is Rank " << destRank << "." << endl;
-    cout << "Most Popular City is: " << pageRank.front() << "!" << endl;
+    cout << "Most Popular City is " << pageRank.front() << "!" << endl;
     return pageRank; //cities sorted from highest rank to lowest rank (most busy to least busy)
 }
 
