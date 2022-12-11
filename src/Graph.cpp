@@ -100,6 +100,13 @@ vector<int> Graph::dijkstra(int src, int dest) { //should also have destination 
 
     for(int i = 0; i < V-1; i++) {
         int u = getMin(distance, visited);
+        if(u == INT_MAX) {
+            vector<int> v;
+            v.push_back(-1);
+            cout << "No solution exists from this starting location to this destination." << endl;
+            return v;
+        }
+
         visited[u] = true;
         for(int v = 0; v < V; v++) {
             int currDistance = distance[u] + adjMatrix[u][v];
