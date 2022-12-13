@@ -12,7 +12,7 @@ int main() {
     // int temp = data225(); commented out for efficiency --> need to change makefile and import data225.cpp into header
 
     // Getting total number of vertices from the matrix
-    ifstream myFile("../tests/data/data_10k.txt");
+    ifstream myFile("../tests/data/matrix_10k.txt");
     string line;
     int line_counter = 0;
     if(myFile.is_open()) {
@@ -28,7 +28,7 @@ int main() {
     vector<vector<int>> matrixVector;   //creates matrix that will be copied into our graph
     matrixVector.resize(V, vector<int>(V));
         
-    ifstream myFile2("../tests/data/data_10k.txt"); //parses matrix file that was generated in order to set the adjacency matrix in our graph
+    ifstream myFile2("../tests/data/matrix_10k.txt"); //parses matrix file that was generated in order to set the adjacency matrix in our graph
     if(myFile2.is_open()) {
         for(int u = 0; u < V; u++) {
             for(int v = 0; v < V; v++) {
