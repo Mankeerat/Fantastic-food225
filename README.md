@@ -14,6 +14,7 @@
         
 - Running Instructions:
     -Make sure you are running the program in [Docker](https://courses.engr.illinois.edu/cs225/fa2022/resources/own-machine/).
+    - First, using the link above, download the 10k generated adjacency matrix (to save time), and import the file into the tests/data directory (same          directory as "data_10k.txt". *IMPORTANT*. Without this, program will fail to run. 
     - Our project uses CMake and requires you to build your own custom makefiles to compile the program.
     - To do this, run mkdir in the base directory of the project to create a new build directory.
     - Inside of this directory, run cmake .. to create the files needed to setup the program.
